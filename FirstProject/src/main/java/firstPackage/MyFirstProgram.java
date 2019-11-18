@@ -4,8 +4,10 @@ public class MyFirstProgram {
 
   public static void main(String[] args) {
 
-    System.out.println("Hello World!");
+    Run r = new Run();
+    r.resultOfCalculation();
 
+    /* r.humanWeight(); - самопроизвольная практическая работа. Не являестя домашним заданием. */
   }
 
 }
