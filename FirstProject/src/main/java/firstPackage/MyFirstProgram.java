@@ -7,7 +7,7 @@ public class MyFirstProgram {
     Run r = new Run();
     r.resultOfCalculation();
 
-    /* r.humanWeight(); - самопроизвольная практическая работа. Не являестя домашним заданием. */
+    /* r.humanWeight(); */
   }
 
 }

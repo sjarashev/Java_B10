@@ -79,10 +79,10 @@ set CMD_LINE_ARGS=%*
 :execute
 @rem Setup the command line
 
-set CLASSPATH=%APP_HOME%\lib\FirstProject.jar
+set CLASSPATH=%APP_HOME%\lib\FirstProject.jar;%APP_HOME%\lib\testng-7.0.0.jar;%APP_HOME%\lib\jcommander-1.72.jar
 
 @rem Execute FirstProject
-"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %FIRST_PROJECT_OPTS%  -classpath "%CLASSPATH%" MyFirstProgram %CMD_LINE_ARGS%
+"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %FIRST_PROJECT_OPTS%  -classpath "%CLASSPATH%" firstPackage.MyFirstProgram %CMD_LINE_ARGS%
 
 :end
 @rem End local scope for the variables with windows NT shell
