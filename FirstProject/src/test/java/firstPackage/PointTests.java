@@ -3,21 +3,29 @@ package firstPackage;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import static firstPackage.MyFirstProgram.distance;
+
 public class PointTests {
 
   @Test
   public void testPoint() {
-    Point p = new Point(3, 10);
-    Assert.assertEquals(p.calculateDistance(), 7.0);
+    Point p1 = new Point(2, 3);
+    Point p2 = new Point(4, 5);
+    Assert.assertEquals(distance(p1,p2), 2.8284271247461903);
   }
+
   @Test
   public void testPoint2() {
-    Point d = new Point(10, 1);
-    Assert.assertEquals(d.calculateDistance(), -9.0);
+    Point p1 = new Point(-1, 2);
+    Point p2 = new Point(3, -4);
+    Assert.assertEquals(distance(p1,p2), 7.211102550927978);
   }
+
   @Test
   public void testPoint3() {
-    Point f = new Point(5, 5);
-    assert f.calculateDistance() == 0.0;
+    Point p1 = new Point(45, 54);
+    Point p2 = new Point(3, -55);
+    Assert.assertEquals(distance(p1,p2), 116.81181447096864);
   }
+
 }
