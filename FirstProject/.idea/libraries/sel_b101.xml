@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="sel-b101">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../sel-b10/SeleniumProject/build/libs/sel-b10.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
