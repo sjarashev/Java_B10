@@ -6,11 +6,12 @@ test {
     useTestNG()
 }
 
+
 repositories {
     mavenCentral()
 }
 
 dependencies {
     implementation 'org.testng:testng:7.0.0'
-    compile 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.+'
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '4.+'
 }
