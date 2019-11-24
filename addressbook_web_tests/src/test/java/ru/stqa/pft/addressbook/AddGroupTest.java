@@ -6,7 +6,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.WebDriver;
 
-public class GroupCreationTest {
+public class AddGroupTest {
 
   private WebDriver wd;
 
