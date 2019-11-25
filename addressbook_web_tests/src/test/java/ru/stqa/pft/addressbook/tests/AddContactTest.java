@@ -8,15 +8,15 @@ public class AddContactTest extends TestBase {
 
   @Test
   public void testAddContact() throws Exception {
-    app.gotoAddContactPage();
-    app.addPersonalInfo(new PersonalData("David", "John", "DJ"));
-    app.addTitle("CEO");
-    app.addCompanyInfo(new CompanyData("ABC", "555 first line"));
-    app.addContactInfo(new ContactData("www.abc.com", "dj@gmail.com", "777777", "9999999", "555555"));
-    app.addBirthDate(new DOBdata("1979", "December", "10"));
-    app.additionalInfo(new AdditionalData("bla", "secondPhone", "second line"));
-    app.submitForm();
-    app.gotoHomePage();
+    app.getContactHelper().gotoAddContactPage();
+    app.getContactHelper().addPersonalInfo(new PersonalData("David", "John", "DJ"));
+    app.getContactHelper().addTitle("CEO");
+    app.getContactHelper().addCompanyInfo(new CompanyData("ABC", "555 first line"));
+    app.getContactHelper().addContactInfo(new ContactData("www.abc.com", "dj@gmail.com", "777777", "9999999", "555555"));
+    app.getContactHelper().addBirthDate(new DOBdata("1979", "December", "10"));
+    app.getContactHelper().additionalInfo(new AdditionalData("bla", "secondPhone", "second line"));
+    app.getContactHelper().submitForm();
+    app.getNavigationHelper().gotoHomePage();
     app.logout();
   }
 }
