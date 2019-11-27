@@ -53,4 +53,24 @@ public class ContactHelper extends HelperBase {
   public void gotoAddContactPage() {
     click(By.linkText("add new"));
   }
+
+  public void modifyContactPage() {
+    click(By.xpath("//img[@alt='Edit']"));
+  }
+
+  public void submitUpdatedContact() {
+    click(By.name("update"));
+  }
+
+  public void selectContact() {
+    click(By.name("selected[]"));
+  }
+
+  public void deleteContact() {
+    click(By.xpath("//input[@value='Delete']"));
+  }
+
+  public void closeAttention() {
+    closeAttentionDialog();
+  }
 }

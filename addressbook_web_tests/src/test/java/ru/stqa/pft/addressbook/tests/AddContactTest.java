@@ -7,7 +7,7 @@ public class AddContactTest extends TestBase {
 
 
   @Test
-  public void testAddContact() throws Exception {
+  public void testAddContact() {
     app.getContactHelper().gotoAddContactPage();
     app.getContactHelper().addPersonalInfo(new PersonalData("David", "John", "DJ"));
     app.getContactHelper().addTitle("CEO");
