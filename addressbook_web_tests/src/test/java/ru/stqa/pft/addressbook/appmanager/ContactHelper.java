@@ -15,40 +15,65 @@ public class ContactHelper extends HelperBase {
     click(By.xpath("(//input[@name='submit'])[2]"));
   }
 
-  public void additionalInfo(AdditionalData additionalData) {
-    type(By.name("address2"), additionalData.getSecondAddress());
-    type(By.name("phone2"), additionalData.getSecondPhone());
-    type(By.name("notes"), additionalData.getNote());
+  public void addPersonalInfo(ContactData contactData) {
+    type(By.name("firstname"), contactData.getName());
+    type(By.name("lastname"), contactData.getLastName());
+    type(By.name("nickname"), contactData.getNickName());
+    type(By.name("title"), contactData.getTitle());
   }
 
-  public void addBirthDate(DOBdata DOBdata) {
-    new Select(wd.findElement(By.name("bday"))).selectByVisibleText(DOBdata.getDay());
-    new Select(wd.findElement(By.name("bmonth"))).selectByVisibleText(DOBdata.getMonth());
-    type(By.name("byear"), DOBdata.getYear());
+  public void addCompanyName(ContactData contactData) {
+    type(By.name("company"), contactData.getCompanyName());
   }
 
-  public void addContactInfo(ContactData contactData) {
+  public void addCompanyAddress(ContactData contactData) {
+    type(By.name("address"), contactData.getCompanyAddress());
+  }
+
+  public void addHomePhone(ContactData contactData) {
     type(By.name("home"), contactData.getHomePhone());
+  }
+
+  public void addMobilePhone(ContactData contactData) {
     type(By.name("mobile"), contactData.getMobilePhone());
+  }
+
+  public void addWorkPhone(ContactData contactData) {
     type(By.name("work"), contactData.getWorkPhone());
+  }
+
+  public void addEmail(ContactData contactData) {
     type(By.name("email"), contactData.getEmail());
+  }
+
+  public void addCompanyURL(ContactData contactData) {
     type(By.name("homepage"), contactData.getCompanyURL());
   }
 
-  public void addCompanyInfo(CompanyData companyData) {
-    type(By.name("company"), companyData.getCompanyName());
-    type(By.name("address"), companyData.getCompanyAddress());
+  public void addDay(ContactData contactData) {
+    new Select(wd.findElement(By.name("bday"))).selectByVisibleText(contactData.getDay());
   }
 
-  public void addTitle(String title) {
-    type(By.name("title"), title);
+  public void addMonth(ContactData contactData) {
+    new Select(wd.findElement(By.name("bmonth"))).selectByVisibleText(contactData.getMonth());
   }
 
-  public void addPersonalInfo(PersonalData personalData) {
-    type(By.name("firstname"), personalData.getName());
-    type(By.name("lastname"), personalData.getLastName());
-    type(By.name("nickname"), personalData.getNickName());
+  public void addYear(ContactData contactData) {
+    type(By.name("byear"), contactData.getYear());
   }
+
+  public void addNote(ContactData contactData) {
+    type(By.name("notes"), contactData.getNote());
+  }
+
+  public void addSecondPhone(ContactData contactData) {
+    type(By.name("phone2"), contactData.getSecondPhone());
+  }
+
+  public void addSecondAddress(ContactData contactData) {
+    type(By.name("address2"), contactData.getSecondAddress());
+  }
+
 
   public void gotoAddContactPage() {
     click(By.linkText("add new"));
