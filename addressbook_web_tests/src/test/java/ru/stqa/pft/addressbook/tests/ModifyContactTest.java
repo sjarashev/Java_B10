@@ -5,10 +5,9 @@ import ru.stqa.pft.addressbook.model.*;
 
 public class ModifyContactTest extends TestBase {
 
-  private ContactData conData = new ContactData("Mark", "Robinson", "MR", "COO");
-
   @Test
   public void testModifyContact() {
+    ContactData conData = new ContactData("Mark", "Robinson", "MR", "COO");
     app.getContactHelper().modifyContactPage();
     conData.setCompanyName("CBA");
     conData.setCompanyAddress("777 Third Line");
@@ -23,21 +22,7 @@ public class ModifyContactTest extends TestBase {
     conData.setSecondAddress("45245245");
     conData.setSecondPhone("858585");
     conData.setNote("blabla");
-
-    app.getContactHelper().addPersonalInfo(conData);
-    app.getContactHelper().addCompanyName(conData);
-    app.getContactHelper().addCompanyAddress(conData);
-    app.getContactHelper().addHomePhone(conData);
-    app.getContactHelper().addMobilePhone(conData);
-    app.getContactHelper().addWorkPhone(conData);
-    app.getContactHelper().addEmail(conData);
-    app.getContactHelper().addCompanyURL(conData);
-    app.getContactHelper().addYear(conData);
-    app.getContactHelper().addMonth(conData);
-    app.getContactHelper().addDay(conData);
-    app.getContactHelper().addSecondAddress(conData);
-    app.getContactHelper().addSecondPhone(conData);
-    app.getContactHelper().addNote(conData);
+    app.getContactHelper().fillContactForm(conData);
     app.getContactHelper().submitUpdatedContact();
     app.getNavigationHelper().gotoHomePage();
     app.logout();
