@@ -1,4 +1,4 @@
-package firstPackage;
+package ru.stqa.pft.litecart.firstPackage;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;

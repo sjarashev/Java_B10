@@ -7,7 +7,7 @@ import ru.stqa.pft.addressbook.model.*;
 
 public class ContactHelper extends HelperBase {
 
-  public ContactHelper(FirefoxDriver wd) {
+  ContactHelper(FirefoxDriver wd) {
     super(wd);
   }
 

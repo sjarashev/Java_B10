@@ -1,4 +1,4 @@
-package firstPackage;
+package ru.stqa.pft.litecart.firstPackage;
 
 public class MyFirstProgram {
 
