@@ -13,8 +13,8 @@ import java.util.concurrent.TimeUnit;
 
 public class GettingStarted {
 
-/*  @Test
-   public void loopThroughMenuItems() throws InterruptedException {
+  @Test
+  public void loopThroughMenuItems() {
     System.setProperty("webdriver.gecko.driver", "C:\\Users\\sjarashev\\Desktop\\Java Training\\Java_B10\\FirstProject\\webdriver\\geckodriver0.24_win64.exe");
     WebDriver driver = new FirefoxDriver();
     driver.manage().timeouts().implicitlyWait(200, TimeUnit.MILLISECONDS);
@@ -30,9 +30,9 @@ public class GettingStarted {
       driver.findElement(By.xpath("//li[@id='app-'][" + i + "]")).click();
       List<WebElement> con = driver.findElements(By.xpath("//ul[@class='docs']"));
       if (con != null) {
-        List<WebElement> attr = driver.findElements(By.xpath("//li[@id='app-']/ul[@class='docs']/li[contains(@id,'doc')]"));
+        List<WebElement> attr = driver.findElements(By.xpath("//li[contains(@id,'doc')]"));
         for (int j = 1; j <= attr.size(); j++) {
-          driver.findElement(By.xpath("//tr//li[@id='app-']/ul[@class='docs']/li[contains(@id,'doc')][" + j + "]")).click();
+          driver.findElement(By.xpath("//li[contains(@id,'doc')][" + j + "]")).click();
           boolean present;
           try {
             driver.findElement(By.xpath("//tr/td/h1"));
@@ -40,16 +40,15 @@ public class GettingStarted {
           } catch (NoSuchElementException e) {
             present = false;
           }
-          System.out.println(present);
+          Assert.assertTrue(present);
         }
       }
     }
     driver.quit();
-  }*/
-
+  }
 
   @Test
-  public void checkStickers() throws InterruptedException {
+  public void checkStickers() {
     System.setProperty("webdriver.gecko.driver", "C:\\Users\\sjarashev\\Desktop\\Java Training\\Java_B10\\FirstProject\\webdriver\\geckodriver0.24_win64.exe");
     WebDriver driver = new FirefoxDriver();
     driver.manage().timeouts().implicitlyWait(200, TimeUnit.MILLISECONDS);
