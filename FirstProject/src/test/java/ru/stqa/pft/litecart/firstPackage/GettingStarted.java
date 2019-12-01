@@ -1,11 +1,11 @@
 package ru.stqa.pft.litecart.firstPackage;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.*;
-
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -30,7 +30,15 @@ public class GettingStarted {
       if (con != null) {
         List<WebElement> attr = driver.findElements(By.xpath("//li[@id='app-']/ul[@class='docs']/li[contains(@id,'doc')]"));
         for (int j = 1; j <= attr.size(); j++) {
-          driver.findElement(By.xpath("//li[@id='app-']/ul[@class='docs']/li[contains(@id,'doc')][" + j + "]")).click();
+          driver.findElement(By.xpath("//tr//li[@id='app-']/ul[@class='docs']/li[contains(@id,'doc')][" + j + "]")).click();
+          boolean present;
+          try {
+            driver.findElement(By.xpath("//tr/td/h1"));
+            present = true;
+          } catch (NoSuchElementException e) {
+            present = false;
+          }
+          System.out.println(present);
         }
       }
     }
