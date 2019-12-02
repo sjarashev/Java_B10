@@ -55,27 +55,15 @@ public class GettingStarted {
     driver.get("http://localhost/litecart/en/");
     driver.manage().window().maximize();
 
-    List<WebElement> duck = driver.findElements(By.xpath("//li[contains(@class, 'product')]"));
-    List<WebElement> sticker = driver.findElements(By.xpath("//div[contains(@class, 'sticker')]"));
+    List<WebElement> ducks = driver.findElements(By.xpath("//li[contains(@class, 'product')]"));
 
-    int d = duck.size();
-    int s = sticker.size();
-    Assert.assertEquals(d, s);
-
-    for (int i = 1; i <= duck.size(); i++) {
-      driver.findElements(By.xpath("//li[contains(@class, 'product')][" + i + "]"));
-      boolean present;
-      try {
-        driver.findElement(By.xpath("//div[contains(@class, 'sticker')]"));
-        present = true;
-      } catch (NoSuchElementException e) {
-        present = false;
+    for (WebElement duck : ducks){
+      int sticker = duck.findElements(By.xpath(".//div[contains(@class, 'sticker')]")).size();
+      if (sticker>0){
+        Assert.assertEquals(sticker,1);
+        System.out.println(sticker);
       }
-      Assert.assertTrue(present);
     }
     driver.quit();
   }
 }
-
-
-
