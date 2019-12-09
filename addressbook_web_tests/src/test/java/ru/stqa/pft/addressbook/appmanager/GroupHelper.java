@@ -45,4 +45,15 @@ public class GroupHelper extends HelperBase {
   public void deleteGroup() {
     click(By.name("delete"));
   }
+
+  public void createGroup(GroupData group) {
+    initGroupPage();
+    fillGroupForm(group);
+    submitGroupCreation();
+    returnToGroupPage();
+  }
+
+  public boolean isThereAGroup() {
+    return isElementPresent(By.name("selected[]"));
+  }
 }
