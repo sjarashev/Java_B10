@@ -1,9 +1,11 @@
 package ru.stqa.pft.addressbook.appmanager;
 
+import org.checkerframework.checker.units.qual.A;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.*;
 
 public class ContactHelper extends HelperBase {
@@ -40,7 +42,7 @@ public class ContactHelper extends HelperBase {
     closeAttentionDialog();
   }
 
-  public void fillContactForm(ContactData contactData){
+  public void fillContactForm(ContactData contactData, boolean creation) {
     type(By.name("firstname"), contactData.getName());
     type(By.name("lastname"), contactData.getLastName());
     type(By.name("nickname"), contactData.getNickName());
@@ -58,5 +60,10 @@ public class ContactHelper extends HelperBase {
     type(By.name("notes"), contactData.getNote());
     type(By.name("phone2"), contactData.getSecondPhone());
     type(By.name("address2"), contactData.getSecondAddress());
+    if (creation) {
+      new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+    } else {
+      Assert.assertFalse(isElementPresent(By.name("new_group")));
+    }
   }
 }

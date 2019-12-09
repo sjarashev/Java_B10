@@ -22,7 +22,8 @@ public class ModifyContactTest extends TestBase {
     conData.setSecondAddress("45245245");
     conData.setSecondPhone("858585");
     conData.setNote("blabla");
-    app.getContactHelper().fillContactForm(conData);
+    conData.setGroup(null);
+    app.getContactHelper().fillContactForm(conData, false);
     app.getContactHelper().submitUpdatedContact();
     app.getNavigationHelper().gotoHomePage();
     app.logout();

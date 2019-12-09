@@ -19,6 +19,7 @@ public class ContactData {
   private String note;
   private String secondPhone;
   private String secondAddress;
+  private String group;
 
   public ContactData(String name, String lastName, String nickName, String title) {
     this.name = name;
@@ -77,6 +78,10 @@ public class ContactData {
 
   public void setSecondAddress(String secondAddress) {
     this.secondAddress = secondAddress;
+  }
+
+  public void setGroup(String group) {
+    this.group = group;
   }
 
   public String getName() {
@@ -145,6 +150,10 @@ public class ContactData {
 
   public String getSecondAddress() {
     return secondAddress;
+  }
+
+  public String getGroup() {
+    return group;
   }
 }
 
