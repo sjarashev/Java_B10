@@ -1,9 +1,7 @@
 package ru.stqa.pft.addressbook.appmanager;
 
-import org.checkerframework.checker.units.qual.A;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.*;
@@ -77,8 +75,8 @@ public class ContactHelper extends HelperBase {
     type(By.name("nickname"), contactData.getNickName());
     type(By.name("title"), contactData.getTitle());
   }
-    public boolean isThereAContact () {
-      return isElementPresent(By.name("selected[]"));
+    public boolean thereIsNoContact() {
+      return !isElementPresent(By.name("selected[]"));
     }
 
     public void createContact (ContactData contact){
