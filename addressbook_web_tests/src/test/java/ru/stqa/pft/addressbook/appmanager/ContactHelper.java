@@ -42,6 +42,10 @@ public class ContactHelper extends HelperBase {
     closeAttentionDialog();
   }
 
+  public void returnToHomePage() {
+    click(By.linkText("home page"));
+  }
+
   public void fillContactForm(ContactData contactData, boolean creation) {
     type(By.name("firstname"), contactData.getName());
     type(By.name("lastname"), contactData.getLastName());
@@ -66,4 +70,21 @@ public class ContactHelper extends HelperBase {
       Assert.assertFalse(isElementPresent(By.name("new_group")));
     }
   }
-}
+
+  private void fillPartialContactForm(ContactData contactData) {
+    type(By.name("firstname"), contactData.getName());
+    type(By.name("lastname"), contactData.getLastName());
+    type(By.name("nickname"), contactData.getNickName());
+    type(By.name("title"), contactData.getTitle());
+  }
+    public boolean isThereAContact () {
+      return isElementPresent(By.name("selected[]"));
+    }
+
+    public void createContact (ContactData contact){
+      gotoAddContactPage();
+      fillPartialContactForm(contact);
+      submitForm();
+      returnToHomePage();
+    }
+  }

@@ -22,7 +22,7 @@ public class AddContactTest extends TestBase {
     conData.setSecondAddress("202020");
     conData.setSecondPhone("101010");
     conData.setNote("bla");
-    conData.setGroup("group updated");
+    conData.setGroup("group");
     app.getContactHelper().fillContactForm(conData, true);
     app.getContactHelper().submitForm();
     app.getNavigationHelper().gotoHomePage();
