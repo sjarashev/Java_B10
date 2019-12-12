@@ -62,7 +62,7 @@ public class GettingStarted extends TestBase {
     wd.quit();
   }*/
 
-  @Test
+  /*@Test
   public void checkAlphaOrder() throws InterruptedException {
     wd.findElement(By.name("username")).sendKeys("admin");
     wd.findElement(By.name("password")).sendKeys("admin");
@@ -85,7 +85,25 @@ public class GettingStarted extends TestBase {
       //wd.navigate().refresh();
     }
     wd.quit();
+  }*/
+
+  @Test
+  public void checkAlphaOrder2() throws InterruptedException {
+    wd.findElement(By.name("username")).sendKeys("admin");
+    wd.findElement(By.name("password")).sendKeys("admin");
+    wd.findElement(By.name("login")).click();
+
+    TestHelper testHelper = new TestHelper();
+
+    List<WebElement> countries = wd.findElements(By.xpath("//form//td[3]"));
+
+    for (WebElement country : countries) {
+      country.findElement(By.xpath(".//a[@href]")).click();
+      List<WebElement> zones = wd.findElements(By.xpath("//form//td[3]//option[@selected='selected']"));
+      List<String> listOfZones = testHelper.createListOf(zones);
+      testHelper.sort(listOfZones);
+      wd.findElement(By.xpath("//li[6]//a[1]")).click();
+    }
+    wd.quit();
   }
-
-
 }
