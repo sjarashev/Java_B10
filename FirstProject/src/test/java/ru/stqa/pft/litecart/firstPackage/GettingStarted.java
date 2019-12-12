@@ -10,12 +10,13 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static org.testng.Assert.assertEquals;
 
-public class GettingStarted extends TestBase{
+public class GettingStarted extends TestBase {
 
   /*@Test
   public void loopThroughMenuItems() {
@@ -48,13 +49,8 @@ public class GettingStarted extends TestBase{
 
   /*@Test
   public void checkStickers() {
-    System.setProperty("webdriver.gecko.driver", "C:\\Users\\sjarashev\\Desktop\\Java Training\\Java_B10\\FirstProject\\webdriver\\geckodriver0.24_win64.exe");
-    WebDriver driver = new FirefoxDriver();
-    driver.manage().timeouts().implicitlyWait(200, TimeUnit.MILLISECONDS);
-    driver.get("http://localhost/litecart/en/");
-    driver.manage().window().maximize();
 
-    List<WebElement> ducks = driver.findElements(By.xpath("//li[contains(@class, 'product')]"));
+    List<WebElement> ducks = wd.findElements(By.xpath("//li[contains(@class, 'product')]"));
 
     for (WebElement duck : ducks) {
       int sticker = duck.findElements(By.xpath(".//div[contains(@class, 'sticker')]")).size();
@@ -63,7 +59,7 @@ public class GettingStarted extends TestBase{
         System.out.println(sticker);
       }
     }
-    driver.quit();
+    wd.quit();
   }*/
 
   @Test
@@ -75,27 +71,21 @@ public class GettingStarted extends TestBase{
     TestHelper testHelper = new TestHelper();
 
     List<WebElement> countries = wd.findElements(By.xpath("//tr//td[5]/a"));
-    List<WebElement> lines = wd.findElements(By.xpath("//tr[@class='row']"));
-
+    List<WebElement> filteredCountries = testHelper.filter(wd.findElements(By.xpath("//tr[@class='row']")));
     List<String> listOfCountries = testHelper.createListOf(countries);
 
     testHelper.sort(listOfCountries);
 
-    for (WebElement line:lines){
-
-      int i = Integer.parseInt(wd.findElement(By.xpath("//tr[@class='row']/td[6]")).getText().trim());
-      if (i > 0){
-
-        line.findElement(By.xpath(".//td[5]/a[@href]")).click();
-        //TimeUnit.SECONDS.sleep(1);
-        List<WebElement> zones = wd.findElements(By.xpath("//table[@class='dataTable']//tr/td[3]"));
-        List<String> listOfZones = testHelper.createListOf(zones);
-        testHelper.sort(listOfZones);
-        wd.findElement(By.xpath("//li[3]//a[1]")).click();
-        TimeUnit.SECONDS.sleep(3);
-      }
+    for (WebElement f : filteredCountries) {
+      f.findElement(By.xpath(".//td[5]/a[@href]")).click();
+      List<WebElement> zones = wd.findElements(By.xpath("//table[@class='dataTable']//tr/td[3]"));
+      List<String> listOfZones = testHelper.createListOf(zones);
+      testHelper.sort(listOfZones);
+      wd.findElement(By.xpath("//li[3]//a[1]")).click();
+      //wd.navigate().refresh();
     }
     wd.quit();
   }
-}
 
+
+}

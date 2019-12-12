@@ -1,5 +1,6 @@
 package ru.stqa.pft.litecart.firstPackage;
 
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.BeforeMethod;
 
@@ -15,6 +16,8 @@ public class TestBase {
     wd = new FirefoxDriver();
     wd.manage().timeouts().implicitlyWait(500, TimeUnit.MILLISECONDS);
     wd.get("http://localhost/litecart/admin/?app=countries&doc=countries");
+    //wd.get("http://localhost/litecart/admin/?app=geo_zones&doc=geo_zones");
+    //wd.get("http://localhost/litecart/en/");
     wd.manage().window().maximize();
   }
 }

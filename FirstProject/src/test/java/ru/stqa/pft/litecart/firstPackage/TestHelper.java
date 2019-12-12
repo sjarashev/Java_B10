@@ -1,5 +1,6 @@
 package ru.stqa.pft.litecart.firstPackage;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
@@ -11,7 +12,7 @@ class TestHelper {
   //private List<String> newList = new ArrayList<>();
 
   List<String> createListOf(List<WebElement> we) {
-     List<String> newList = new ArrayList<>();
+    List<String> newList = new ArrayList<>();
     for (WebElement webElement : we) {
       if (webElement.getText() != null && !webElement.getText().trim().equals("")) {
         newList.add(webElement.getText());
@@ -19,8 +20,6 @@ class TestHelper {
     }
     return newList;
   }
-
-
 
   void sort(List<String> we) {
 
@@ -33,9 +32,20 @@ class TestHelper {
         return;
       } else {
         Assert.assertTrue(true);
-        System.out.println(previousWe+currentWe);
+        //System.out.println(previousWe+currentWe);
         previousWe = we.get(i);
       }
     }
+  }
+
+  List<WebElement> filter(List<WebElement> we) {
+    List<WebElement> filtered = new ArrayList<>();
+    for (WebElement w : we) {
+      int i = Integer.parseInt(w.findElement(By.xpath(".//td[6]")).getText().trim());
+      if (i > 0) {
+        filtered.add(w);
+      }
+    }
+    return filtered;
   }
 }
