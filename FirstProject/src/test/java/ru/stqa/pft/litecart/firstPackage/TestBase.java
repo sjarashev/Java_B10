@@ -3,9 +3,7 @@ package ru.stqa.pft.litecart.firstPackage;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.testng.annotations.BeforeMethod;
-
 import java.util.concurrent.TimeUnit;
 
 public class TestBase {
@@ -19,7 +17,7 @@ public class TestBase {
     wd.manage().timeouts().implicitlyWait(500, TimeUnit.MILLISECONDS);
     //wd.get("http://localhost/litecart/admin/?app=countries&doc=countries");
     //wd.get("http://localhost/litecart/admin/?app=geo_zones&doc=geo_zones");
-    wd.get("http://localhost/litecart/en/");
-    wd.manage().window().maximize();
+    //wd.get("http://localhost/litecart/en/");
+    //wd.manage().window().maximize();
   }
 }

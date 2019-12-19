@@ -57,6 +57,8 @@ public class GettingStarted extends TestBase {
 
   @Test (enabled = false)
   public void checkAlphaOrder() throws InterruptedException {
+    wd.get("http://localhost/litecart/admin/?app=countries&doc=countries");
+    wd.manage().window().maximize();
     wd.findElement(By.name("username")).sendKeys("admin");
     wd.findElement(By.name("password")).sendKeys("admin");
     wd.findElement(By.name("login")).click();
@@ -82,8 +84,10 @@ public class GettingStarted extends TestBase {
     wd.quit();
   }
 
-  @Test(enabled = false)
+  @Test(enabled = true)
   public void checkAlphaOrder2() throws InterruptedException {
+    wd.get("http://localhost/litecart/admin/?app=geo_zones&doc=geo_zones");
+    wd.manage().window().maximize();
     wd.findElement(By.name("username")).sendKeys("admin");
     wd.findElement(By.name("password")).sendKeys("admin");
     wd.findElement(By.name("login")).click();
@@ -104,7 +108,7 @@ public class GettingStarted extends TestBase {
     wd.quit();
   }
 
-  @Test(enabled = true)
+  @Test(enabled = false)
   public void checkCampaignsItem() throws InterruptedException {
 
     WebElement campaignName = wd.findElement(By.xpath("//div[@id='box-campaigns']//a/div[2]"));
