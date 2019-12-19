@@ -32,7 +32,7 @@ public class ProductVerification {
   public boolean regularPrice(){
     String i = regularPriceElement.getCssValue("color");
     String r = regularPriceElement.getCssValue("text-decoration-line");
-    String[] hexValue = i.replace("rgba(", "").replace(")", "").split(",");
+    String[] hexValue = i.replace("rgb(", "").replace(")", "").split(",");
     hexValue[0] = hexValue[0].trim();
     int hexValue1 = Integer.parseInt(hexValue[0]);
     hexValue[1] = hexValue[1].trim();
@@ -47,7 +47,7 @@ public class ProductVerification {
   public boolean promoPrice(){
     String i = promoPriceElement.getCssValue("color");
     String r = promoPriceElement.getTagName();
-    String[] hexValue = i.replace("rgba(", "").replace(")", "").split(",");
+    String[] hexValue = i.replace("rgb(", "").replace(")", "").split(",");
     hexValue[0] = hexValue[0].trim();
     int hexValue1 = Integer.parseInt(hexValue[0]);
     hexValue[1] = hexValue[1].trim();
