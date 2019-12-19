@@ -55,7 +55,7 @@ public class GettingStarted extends TestBase {
     wd.quit();
   }*/
 
-  @Test (enabled = false)
+  @Test (enabled = true)
   public void checkAlphaOrder() throws InterruptedException {
     wd.get("http://localhost/litecart/admin/?app=countries&doc=countries");
     wd.manage().window().maximize();
@@ -84,7 +84,7 @@ public class GettingStarted extends TestBase {
     wd.quit();
   }
 
-  @Test(enabled = true)
+  @Test(enabled = false)
   public void checkAlphaOrder2() throws InterruptedException {
     wd.get("http://localhost/litecart/admin/?app=geo_zones&doc=geo_zones");
     wd.manage().window().maximize();
