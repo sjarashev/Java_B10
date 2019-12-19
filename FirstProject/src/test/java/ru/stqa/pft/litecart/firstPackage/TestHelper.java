@@ -27,15 +27,9 @@ class TestHelper {
     previousWe = we.get(0);
     for (int i = 1; i < we.size(); i++) {
       currentWe = we.get(i);
-      if (previousWe.trim().toLowerCase().compareTo(currentWe.trim().toLowerCase()) > 0) {
-        Assert.fail();
-        return;
-      } else {
-        Assert.assertTrue(true);
-        //System.out.println(previousWe+currentWe);
+      Assert.assertTrue(previousWe.trim().toLowerCase().compareTo(currentWe.trim().toLowerCase()) < 0);
         previousWe = we.get(i);
-      }
-    }
+    }System.out.println("Список отсортирован в алфавитном порядке");
   }
 
   List<WebElement> filter(List<WebElement> we) {

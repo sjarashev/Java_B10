@@ -62,7 +62,7 @@ public class GettingStarted extends TestBase {
     wd.quit();
   }*/
 
-  /*@Test
+  @Test (enabled = true)
   public void checkAlphaOrder() throws InterruptedException {
     wd.findElement(By.name("username")).sendKeys("admin");
     wd.findElement(By.name("password")).sendKeys("admin");
@@ -71,23 +71,25 @@ public class GettingStarted extends TestBase {
     TestHelper testHelper = new TestHelper();
 
     List<WebElement> countries = wd.findElements(By.xpath("//tr//td[5]/a"));
-    List<WebElement> filteredCountries = testHelper.filter(wd.findElements(By.xpath("//tr[@class='row']")));
     List<String> listOfCountries = testHelper.createListOf(countries);
-
     testHelper.sort(listOfCountries);
+    int numberOfCountries = wd.findElements(By.xpath("//tr[@class='row']")).size();
 
-    for (WebElement f : filteredCountries) {
-      f.findElement(By.xpath(".//td[5]/a[@href]")).click();
-      List<WebElement> zones = wd.findElements(By.xpath("//table[@class='dataTable']//tr/td[3]"));
-      List<String> listOfZones = testHelper.createListOf(zones);
-      testHelper.sort(listOfZones);
-      wd.findElement(By.xpath("//li[3]//a[1]")).click();
-      //wd.navigate().refresh();
+    for (int i = 0; i < numberOfCountries; i++) {
+      List<WebElement> we = wd.findElements(By.xpath("//tr[@class='row']"));
+      WebElement w = we.get(i);
+      if (Integer.parseInt(w.findElement(By.xpath("./td[6]")).getText().trim())>0){
+        w.findElement(By.xpath("./td[5]/a[@href]")).click();
+        List<WebElement> zones = wd.findElements(By.xpath("//table[@class='dataTable']//tr/td[3]"));
+        List<String> listOfZones = testHelper.createListOf(zones);
+        testHelper.sort(listOfZones);
+        wd.findElement(By.xpath("//li[3]//a[1]")).click();
+      }
     }
     wd.quit();
-  }*/
+  }
 
-  @Test
+  @Test(enabled = false)
   public void checkAlphaOrder2() throws InterruptedException {
     wd.findElement(By.name("username")).sendKeys("admin");
     wd.findElement(By.name("password")).sendKeys("admin");
