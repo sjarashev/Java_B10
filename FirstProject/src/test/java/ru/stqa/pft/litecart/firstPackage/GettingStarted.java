@@ -62,7 +62,7 @@ public class GettingStarted extends TestBase {
     wd.quit();
   }*/
 
-  @Test (enabled = true)
+  @Test (enabled = false)
   public void checkAlphaOrder() throws InterruptedException {
     wd.findElement(By.name("username")).sendKeys("admin");
     wd.findElement(By.name("password")).sendKeys("admin");
@@ -89,7 +89,7 @@ public class GettingStarted extends TestBase {
     wd.quit();
   }
 
-  @Test(enabled = false)
+  @Test(enabled = true)
   public void checkAlphaOrder2() throws InterruptedException {
     wd.findElement(By.name("username")).sendKeys("admin");
     wd.findElement(By.name("password")).sendKeys("admin");
@@ -97,10 +97,12 @@ public class GettingStarted extends TestBase {
 
     TestHelper testHelper = new TestHelper();
 
-    List<WebElement> countries = wd.findElements(By.xpath("//form//td[3]"));
+    int numberOfCountries = wd.findElements(By.xpath("//tr[@class='row']")).size();
 
-    for (WebElement country : countries) {
-      country.findElement(By.xpath(".//a[@href]")).click();
+    for (int i = 0; i < numberOfCountries; i++) {
+      List<WebElement> we = wd.findElements(By.xpath("//tr[@class='row']"));
+      WebElement w = we.get(i);
+      w.findElement(By.xpath("./td[3]/a[@href]")).click();
       List<WebElement> zones = wd.findElements(By.xpath("//form//td[3]//option[@selected='selected']"));
       List<String> listOfZones = testHelper.createListOf(zones);
       testHelper.sort(listOfZones);
