@@ -1,18 +1,11 @@
 package ru.stqa.pft.litecart.firstPackage;
 
-import com.google.common.collect.Ordering;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import static org.testng.Assert.assertEquals;
 
@@ -89,7 +82,7 @@ public class GettingStarted extends TestBase {
     wd.quit();
   }
 
-  @Test(enabled = true)
+  @Test(enabled = false)
   public void checkAlphaOrder2() throws InterruptedException {
     wd.findElement(By.name("username")).sendKeys("admin");
     wd.findElement(By.name("password")).sendKeys("admin");
@@ -108,6 +101,35 @@ public class GettingStarted extends TestBase {
       testHelper.sort(listOfZones);
       wd.findElement(By.xpath("//li[6]//a[1]")).click();
     }
+    wd.quit();
+  }
+
+  @Test(enabled = true)
+  public void checkCampaignsItem() throws InterruptedException {
+
+    WebElement campaignName = wd.findElement(By.xpath("//div[@id='box-campaigns']//a/div[2]"));
+    WebElement campaignRegularPrice = wd.findElement(By.xpath("//div[@id='box-campaigns']//a/div[4]/s"));
+    WebElement campaignPromoPrice = wd.findElement(By.xpath("//div[@id='box-campaigns']//a/div[4]/strong"));
+    ProductVerification pd1 = new ProductVerification(campaignName, campaignRegularPrice, campaignPromoPrice);
+
+    Assert.assertTrue(pd1.regularPrice());
+    Assert.assertTrue(pd1.promoPrice());
+    Assert.assertTrue(pd1.promoPriceFont()>pd1.regularPriceFont());
+
+    wd.findElement(By.xpath("//div[@id='box-campaigns']//a[1]")).click();
+
+    WebElement productName = wd.findElement(By.xpath("//div[@id='box-product']/div[1]/h1"));
+    WebElement productRegularPrice = wd.findElement(By.xpath("//div[@id='box-product']/div[2]/div[2]/div[2]/s"));
+    WebElement productPromoPrice = wd.findElement(By.xpath("//div[@id='box-product']/div[2]/div[2]/div[2]/strong"));
+    ProductVerification pd2 = new ProductVerification(productName, productRegularPrice, productPromoPrice);
+
+    Assert.assertTrue(pd2.regularPrice());
+    Assert.assertTrue(pd2.promoPrice());
+    Assert.assertTrue(pd2.promoPriceFont()>pd2.regularPriceFont());
+
+    wd.findElement(By.xpath("//div[@class='content']//div//a[contains(text(),'Home')]")).click();
+
+    Assert.assertEquals(pd1.productInfo(), pd2.productInfo());
     wd.quit();
   }
 }

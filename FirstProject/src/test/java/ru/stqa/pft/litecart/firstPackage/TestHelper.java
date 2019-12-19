@@ -1,15 +1,11 @@
 package ru.stqa.pft.litecart.firstPackage;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
-
 import java.util.ArrayList;
 import java.util.List;
 
 class TestHelper {
-
-  //private List<String> newList = new ArrayList<>();
 
   List<String> createListOf(List<WebElement> we) {
     List<String> newList = new ArrayList<>();
@@ -22,7 +18,6 @@ class TestHelper {
   }
 
   void sort(List<String> we) {
-
     String previousWe, currentWe;
     previousWe = we.get(0);
     for (int i = 1; i < we.size(); i++) {
@@ -30,16 +25,5 @@ class TestHelper {
       Assert.assertTrue(previousWe.trim().toLowerCase().compareTo(currentWe.trim().toLowerCase()) < 0);
         previousWe = we.get(i);
     }System.out.println("Список отсортирован в алфавитном порядке");
-  }
-
-  List<WebElement> filter(List<WebElement> we) {
-    List<WebElement> filtered = new ArrayList<>();
-    for (WebElement w : we) {
-      int i = Integer.parseInt(w.findElement(By.xpath(".//td[6]")).getText().trim());
-      if (i > 0) {
-        filtered.add(w);
-      }
-    }
-    return filtered;
   }
 }
