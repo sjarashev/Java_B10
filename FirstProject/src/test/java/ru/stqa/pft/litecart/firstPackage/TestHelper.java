@@ -1,6 +1,9 @@
 package ru.stqa.pft.litecart.firstPackage;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +26,8 @@ class TestHelper {
     for (int i = 1; i < we.size(); i++) {
       currentWe = we.get(i);
       Assert.assertTrue(previousWe.trim().toLowerCase().compareTo(currentWe.trim().toLowerCase()) < 0);
-        previousWe = we.get(i);
-    }System.out.println("Список отсортирован в алфавитном порядке");
+      previousWe = we.get(i);
+    }
+    System.out.println("Список отсортирован в алфавитном порядке");
   }
 }
