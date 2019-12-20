@@ -10,6 +10,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="FirstProject.main" />
     <orderEntry type="library" name="Gradle: org.seleniumhq.selenium:selenium-java:4.0.0-alpha-3" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.commons:commons-lang3:3.9" level="project" />
     <orderEntry type="library" name="Gradle: org.testng:testng:7.0.0" level="project" />
     <orderEntry type="library" name="Gradle: org.seleniumhq.selenium:selenium-support:4.0.0-alpha-3" level="project" />
     <orderEntry type="library" name="Gradle: org.seleniumhq.selenium:selenium-chrome-driver:4.0.0-alpha-3" level="project" />

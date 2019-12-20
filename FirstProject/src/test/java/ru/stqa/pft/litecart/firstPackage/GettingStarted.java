@@ -1,23 +1,18 @@
 package ru.stqa.pft.litecart.firstPackage;
 
-import com.sun.org.apache.bcel.internal.generic.RETURN;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.*;
-import ru.stqa.pft.litecart.appmanager.PersonalData;
-
+import org.apache.commons.lang3.RandomStringUtils;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
-
 import static org.testng.Assert.assertEquals;
 
 public class GettingStarted extends TestBase {
+
 
   @Test(enabled = false)
   public void loopThroughMenuItems() {
@@ -155,7 +150,7 @@ public class GettingStarted extends TestBase {
     wd.findElement(locator).sendKeys(text);
   }
 
-  @Test
+  @Test(enabled = true)
   public void userRegistration() throws Exception {
     wd.get("http://localhost/litecart/en/");
     wd.manage().window().maximize();
@@ -167,7 +162,8 @@ public class GettingStarted extends TestBase {
     type(By.name("address1"), "123 first line");
     type(By.name("postcode"), "12345");
     type(By.name("city"), "NY");
-    type(By.name("email"), "davidj@abc.com");
+    String email = RandomStringUtils.randomAlphabetic(8)+"@mail.ru";
+    type(By.name("email"), email);
     type(By.name("phone"), "1234567890");
     type(By.name("password"), "123");
     type(By.name("confirmed_password"), "123");
@@ -184,5 +180,6 @@ public class GettingStarted extends TestBase {
     type(By.name("password"), "123");
     wd.findElement(By.name("login")).click();
     wd.findElement(By.linkText("Logout")).click();
+    wd.quit();
   }
 }
