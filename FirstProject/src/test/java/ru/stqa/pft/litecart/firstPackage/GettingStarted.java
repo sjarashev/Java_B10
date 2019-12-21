@@ -1,18 +1,18 @@
 package ru.stqa.pft.litecart.firstPackage;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import org.apache.commons.lang3.RandomStringUtils;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+import org.openqa.selenium.JavascriptExecutor;
+import java.io.File;
+
 import static org.testng.Assert.assertEquals;
 
 public class GettingStarted extends TestBase {
-
 
   @Test(enabled = false)
   public void loopThroughMenuItems() {
@@ -150,7 +150,7 @@ public class GettingStarted extends TestBase {
     wd.findElement(locator).sendKeys(text);
   }
 
-  @Test(enabled = true)
+  @Test(enabled = false)
   public void userRegistration() throws Exception {
     wd.get("http://localhost/litecart/en/");
     wd.manage().window().maximize();
@@ -171,7 +171,7 @@ public class GettingStarted extends TestBase {
     wd.findElement(By.xpath("//span[@class='select2-selection__arrow']")).click();
     wd.findElement(By.xpath("//input[@class='select2-search__field']")).sendKeys("United States", Keys.ENTER);
 
-    if (wd.findElement(By.xpath("//input[@name='newsletter']")).getAttribute("checked").equals("false")){
+    if (!wd.findElement(By.xpath("//input[@name='newsletter']")).isSelected()){
       wd.findElement(By.xpath("//input[@name='newsletter']")).click();
     }
     wd.findElement(By.name("create_account")).click();
@@ -180,6 +180,74 @@ public class GettingStarted extends TestBase {
     type(By.name("password"), "123");
     wd.findElement(By.name("login")).click();
     wd.findElement(By.linkText("Logout")).click();
+    wd.quit();
+  }
+
+  @Test(enabled = true)
+  public void addProduct() throws Exception {
+    wd.get("http://localhost/litecart/admin/");
+    wd.manage().window().maximize();
+    wd.findElement(By.name("username")).sendKeys("admin");
+    wd.findElement(By.name("password")).sendKeys("admin");
+    wd.findElement(By.name("login")).click();
+    wd.findElement(By.xpath("//li[2]//a[1]")).click();
+    wd.findElement(By.xpath("//a[contains(text(),'Add New Product')]")).click();
+
+    //заполнение полей
+    wd.findElement(By.xpath("//label[contains(text(),'Enabled')]//input[@name='status']")).click();
+    type(By.name("name[en]"), "product");
+    type(By.name("code"), "123");
+    type(By.name("quantity"), "1000");
+
+    // проставление галочек
+    if (!wd.findElement(By.xpath("//tr[3]//input[@name='categories[]']")).isSelected()){
+      wd.findElement(By.xpath("//tr[3]//input[@name='categories[]']")).click();
+    }
+    if (!wd.findElement(By.xpath("//tr[4]//input[@name='product_groups[]']")).isSelected()) {
+      wd.findElement(By.xpath("//tr[4]//input[@name='product_groups[]']")).click();
+    }
+
+    //выбор опций из выпадающих списков
+    new Select(wd.findElement(By.name("quantity_unit_id"))).selectByVisibleText("pcs");
+    new Select(wd.findElement(By.name("delivery_status_id"))).selectByVisibleText("3-5 days");
+    new Select(wd.findElement(By.name("sold_out_status_id"))).selectByVisibleText("Temporary sold out");
+
+    //загрузка картинки с указанием относительного пути
+    File file = new File("image/Capture.JPG");
+    String image = file.getAbsolutePath();
+    WebElement uploadElement = wd.findElement(By.name("new_images[]"));
+    uploadElement.sendKeys(image);
+
+    //проставление даты, от - до
+    JavascriptExecutor js = (JavascriptExecutor) wd;
+    js.executeScript("document.getElementsByName('date_valid_from')[0].setAttribute('value', '2019-12-12')");
+    js.executeScript("document.getElementsByName('date_valid_to')[0].setAttribute('value', '2020-12-12')");
+
+    //переход на вкладку "Infomation"
+    wd.findElement(By.xpath("//a[contains(text(),'Information')]")).click();
+    TimeUnit.SECONDS.sleep(2);
+
+    //заполнение полей + выбор опций из выпадающих списков
+    new Select(wd.findElement(By.name("manufacturer_id"))).selectByVisibleText("ACME Corp.");
+    type(By.name("keywords"), "abc");
+    type(By.name("short_description[en]"), "abc");
+    type(By.cssSelector("div.trumbowyg-editor"), "abc");
+    type(By.name("head_title[en]"), "abc");
+    type(By.name("meta_description[en]"), "abc");
+
+    //переход на вкладку "Prices"
+    wd.findElement(By.xpath("//a[contains(text(),'Prices')]")).click();
+    TimeUnit.SECONDS.sleep(2);
+
+    //заполнение полей + выбор опций из выпадающих списков
+    type(By.name("purchase_price"), "20.00");
+    new Select(wd.findElement(By.name("purchase_price_currency_code"))).selectByVisibleText("US Dollars");
+    new Select(wd.findElement(By.name("tax_class_id"))).selectByVisibleText("Standard");
+    type(By.xpath("//input[@name='prices[USD]']"), "40.00");
+    type(By.xpath("//input[@name='prices[EUR]']"), "40.00");
+    
+    //сохранение формы
+    wd.findElement(By.name("save")).click();
     wd.quit();
   }
 }
