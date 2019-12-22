@@ -2,6 +2,7 @@ package ru.stqa.pft.litecart.firstPackage;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -9,10 +10,20 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.JavascriptExecutor;
 import java.io.File;
-
+import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 import static org.testng.Assert.assertEquals;
 
 public class GettingStarted extends TestBase {
+
+  private void type(By locator, String text) {
+    wd.findElement(locator).click();
+    wd.findElement(locator).clear();
+    wd.findElement(locator).sendKeys(text);
+  }
+
+  private boolean isElementPresent(WebDriver driver, By locator) {
+    return driver.findElements(locator).size() > 0;
+  }
 
   @Test(enabled = false)
   public void loopThroughMenuItems() {
@@ -144,12 +155,6 @@ public class GettingStarted extends TestBase {
     wd.quit();
   }
 
-  private void type(By locator, String text) {
-    wd.findElement(locator).click();
-    wd.findElement(locator).clear();
-    wd.findElement(locator).sendKeys(text);
-  }
-
   @Test(enabled = false)
   public void userRegistration() throws Exception {
     wd.get("http://localhost/litecart/en/");
@@ -162,7 +167,7 @@ public class GettingStarted extends TestBase {
     type(By.name("address1"), "123 first line");
     type(By.name("postcode"), "12345");
     type(By.name("city"), "NY");
-    String email = RandomStringUtils.randomAlphabetic(8)+"@mail.ru";
+    String email = RandomStringUtils.randomAlphabetic(8) + "@mail.ru";
     type(By.name("email"), email);
     type(By.name("phone"), "1234567890");
     type(By.name("password"), "123");
@@ -171,7 +176,7 @@ public class GettingStarted extends TestBase {
     wd.findElement(By.xpath("//span[@class='select2-selection__arrow']")).click();
     wd.findElement(By.xpath("//input[@class='select2-search__field']")).sendKeys("United States", Keys.ENTER);
 
-    if (!wd.findElement(By.xpath("//input[@name='newsletter']")).isSelected()){
+    if (!wd.findElement(By.xpath("//input[@name='newsletter']")).isSelected()) {
       wd.findElement(By.xpath("//input[@name='newsletter']")).click();
     }
     wd.findElement(By.name("create_account")).click();
@@ -183,7 +188,7 @@ public class GettingStarted extends TestBase {
     wd.quit();
   }
 
-  @Test(enabled = true)
+  @Test(enabled = false)
   public void addProduct() throws Exception {
     wd.get("http://localhost/litecart/admin/");
     wd.manage().window().maximize();
@@ -200,7 +205,7 @@ public class GettingStarted extends TestBase {
     type(By.name("quantity"), "1000");
 
     // проставление галочек
-    if (!wd.findElement(By.xpath("//tr[3]//input[@name='categories[]']")).isSelected()){
+    if (!wd.findElement(By.xpath("//tr[3]//input[@name='categories[]']")).isSelected()) {
       wd.findElement(By.xpath("//tr[3]//input[@name='categories[]']")).click();
     }
     if (!wd.findElement(By.xpath("//tr[4]//input[@name='product_groups[]']")).isSelected()) {
@@ -245,9 +250,108 @@ public class GettingStarted extends TestBase {
     new Select(wd.findElement(By.name("tax_class_id"))).selectByVisibleText("Standard");
     type(By.xpath("//input[@name='prices[USD]']"), "40.00");
     type(By.xpath("//input[@name='prices[EUR]']"), "40.00");
-    
+
     //сохранение формы
     wd.findElement(By.name("save")).click();
+    wd.quit();
+  }
+
+  @Test(enabled = true)
+  public void addToCart() throws InterruptedException {
+    wd.get("http://localhost/litecart/en/");
+    wd.manage().window().maximize();
+    WebDriverWait wait = new WebDriverWait(wd, 10);
+    WebElement items = wd.findElement(By.xpath("//span[@class='quantity']"));
+
+    //выбор первого товара
+    wd.findElement(By.xpath("//div[@id='box-most-popular']//li[1]")).click();
+    if (isElementPresent(wd, By.xpath("//select[@name='options[Size]']"))) {
+      new Select(wd.findElement(By.xpath("//select[@name='options[Size]']"))).selectByVisibleText("Small");
+    }
+    //добавление первого товара в корзину
+    wd.findElement(By.xpath("//button[@name='add_cart_product']")).click();
+    Alert alert = wait.until(alertIsPresent());
+    alert.accept();
+    wd.navigate().refresh();
+    wait.until(stalenessOf(items));
+    items = wd.findElement(By.xpath("//span[@class='quantity']"));
+
+    //ожидание обновления счетчика товаров в корзине
+    wait.until(textToBePresentInElement(items, "1"));
+    wd.findElement(By.xpath("//li[@class='general-0']//a")).click();
+
+    //выбор второго товара
+    wd.findElement(By.xpath("//div[@id='box-most-popular']//li[1]")).click();
+    if (isElementPresent(wd, By.xpath("//select[@name='options[Size]']"))) {
+      new Select(wd.findElement(By.xpath("//select[@name='options[Size]']"))).selectByVisibleText("Small");
+    }
+    //добавление второго товара в корзину
+    wd.findElement(By.xpath("//button[@name='add_cart_product']")).click();
+    alert = wait.until(alertIsPresent());
+    alert.accept();
+    wd.navigate().refresh();
+    wait.until(stalenessOf(items));
+    items = wd.findElement(By.xpath("//span[@class='quantity']"));
+
+    //ожидание обновления счетчика товаров в корзине
+    wait.until(textToBePresentInElement(items, "2"));
+    wd.findElement(By.xpath("//li[@class='general-0']//a")).click();
+
+    //выбор третьего товара
+    wd.findElement(By.xpath("//div[@id='box-most-popular']//li[1]")).click();
+    if (isElementPresent(wd, By.xpath("//select[@name='options[Size]']"))) {
+      new Select(wd.findElement(By.xpath("//select[@name='options[Size]']"))).selectByVisibleText("Small");
+    }
+    //добавление третьего товара в корзину
+    wd.findElement(By.xpath("//button[@name='add_cart_product']")).click();
+    alert = wait.until(alertIsPresent());
+    alert.accept();
+    wd.navigate().refresh();
+    wait.until(stalenessOf(items));
+    items = wd.findElement(By.xpath("//span[@class='quantity']"));
+
+    //ожидание обновления счетчика товаров в корзине
+    wait.until(textToBePresentInElement(items, "3"));
+
+    //переход в корзину
+    wd.findElement(By.xpath("//a[contains(text(),'Checkout »')]")).click();
+
+    //создание списка товаров
+    WebElement table = wd.findElement(By.xpath("//div[@id='checkout-summary-wrapper']"));
+    List<WebElement> products = table.findElements(By.xpath(".//tr/td[@class='item']"));
+    List<WebElement> removeitem = wd.findElements(By.xpath("//div[@class='viewport']//li//p[4]/button"));
+
+    //удаление первого товара
+    wait.until(visibilityOf(removeitem.get(0))).click();
+    removeitem = wd.findElements(By.xpath("//div[@class='viewport']//li//p[4]/button"));
+
+    //проверка отсутствия первого удаленного товара в списке
+    wait.until(stalenessOf(products.get(0)));
+    products = table.findElements(By.xpath(".//tr/td[@class='item']"));
+
+    //проверка размера списка за вычетом первого товара
+    Assert.assertEquals(products.size(), 2);
+
+    //удаление второго товара
+    wait.until(visibilityOf(removeitem.get(0))).click();
+    removeitem = wd.findElements(By.xpath("//div[@class='viewport']//li//p[4]/button"));
+
+    //проверка отсутствия второго удаленного товара в списке
+    wait.until(stalenessOf(products.get(0)));
+    products = table.findElements(By.xpath(".//tr/td[@class='item']"));
+
+    //проверка размера списка за вычетом 2 товаров
+    Assert.assertEquals(products.size(), 1);
+
+    //удаление третьего товара
+    wait.until(visibilityOf(removeitem.get(0))).click();
+
+    //проверка отсутствия последнего удаленного товара в списке
+    wait.until(stalenessOf(products.get(0)));
+    products = table.findElements(By.xpath(".//tr/td[@class='item']"));
+
+    //проверка размера списка за вычетом всех 3 товаров
+    Assert.assertEquals(products.size(), 0);
     wd.quit();
   }
 }
