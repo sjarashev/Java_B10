@@ -259,7 +259,7 @@ public class GettingStarted extends TestBase {
     wd.quit();
   }
 
-  @Test(enabled = true)
+  @Test(enabled = false)
   public void addToCart() throws InterruptedException {
     wd.get("http://localhost/litecart/en/");
     wd.manage().window().maximize();
@@ -313,7 +313,7 @@ public class GettingStarted extends TestBase {
     }return newWindow;
   }
 
-  @Test(enabled = false)
+  @Test(enabled = true)
   public void switchBetweenWindows() throws Exception {
     wd.get("http://localhost/litecart/admin/?app=countries&doc=countries");
     wd.manage().window().maximize();
