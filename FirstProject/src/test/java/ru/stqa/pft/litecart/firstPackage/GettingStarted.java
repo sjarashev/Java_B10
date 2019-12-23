@@ -91,27 +91,24 @@ public class GettingStarted extends TestBase {
     }
   }
 
-  @Test(enabled = true)
+  @Test(enabled = false)
   public void checkAlphaOrder() throws InterruptedException {
     wd.get("http://localhost/litecart/admin/?app=countries&doc=countries");
     wd.manage().window().maximize();
     wd.findElement(By.name("username")).sendKeys("admin");
     wd.findElement(By.name("password")).sendKeys("admin");
     wd.findElement(By.name("login")).click();
-
     TestHelper testHelper = new TestHelper();
-
-    List<WebElement> countries = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//tr//td[5]/a")));
+    List<WebElement> countries = wd.findElements(By.xpath("//tr//td[5]/a"));
     List<String> listOfCountries = testHelper.createListOf(countries);
     testHelper.sort(listOfCountries);
-    int numberOfCountries = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//tr[@class='row']"))).size();
-
+    int numberOfCountries = wd.findElements(By.xpath("//tr[@class='row']")).size();
     for (int i = 0; i < numberOfCountries; i++) {
-      List<WebElement> we = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("/td[5]/a[@href]")));
+      List<WebElement> we = wd.findElements(By.xpath("//tr[@class='row']"));
       WebElement w = we.get(i);
       if (Integer.parseInt(w.findElement(By.xpath("./td[6]")).getText().trim()) > 0) {
         w.findElement(By.xpath("./td[5]/a[@href]")).click();
-        List<WebElement> zones = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//table[@class='dataTable']//tr/td[3]")));
+        List<WebElement> zones = wd.findElements(By.xpath("//table[@class='dataTable']//tr/td[3]"));
         List<String> listOfZones = testHelper.createListOf(zones);
         testHelper.sort(listOfZones);
         wd.findElement(By.xpath("//li[3]//a[1]")).click();
