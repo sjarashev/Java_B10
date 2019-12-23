@@ -5,15 +5,17 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.BeforeMethod;
 import java.util.concurrent.TimeUnit;
 
 public class TestBase {
-  ChromeDriver wd;
+  public FirefoxDriver wd;
+  public WebDriverWait wait;
 
   @BeforeMethod
   public void init() {
-    wd = new ChromeDriver();
-    wd.manage().timeouts().implicitlyWait(500, TimeUnit.MILLISECONDS);
+    wd = new FirefoxDriver();
+    wait = new WebDriverWait(wd, 10);
   }
 }

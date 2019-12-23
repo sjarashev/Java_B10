@@ -1,6 +1,7 @@
 package ru.stqa.pft.litecart.firstPackage;
 
 import org.openqa.selenium.*;
+import org.openqa.selenium.logging.LogEntry;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -8,11 +9,15 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import org.apache.commons.lang3.RandomStringUtils;
+
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+
 import org.openqa.selenium.JavascriptExecutor;
+
 import java.io.File;
+
 import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 import static org.testng.Assert.assertEquals;
 
@@ -26,6 +31,19 @@ public class GettingStarted extends TestBase {
 
   private boolean isElementPresent(WebDriver driver, By locator) {
     return driver.findElements(locator).size() > 0;
+  }
+
+  private String newWindow() {
+    String mainWindow = wd.getWindowHandle();
+    wait.until(numberOfWindowsToBe(2));
+    Set<String> allWindows = wd.getWindowHandles();
+    String newWindow = null;
+    for (String window : allWindows) {
+      if (!window.equals(mainWindow)) {
+        newWindow = window;
+      }
+    }
+    return newWindow;
   }
 
   @Test(enabled = false)
@@ -263,11 +281,10 @@ public class GettingStarted extends TestBase {
   public void addToCart() throws InterruptedException {
     wd.get("http://localhost/litecart/en/");
     wd.manage().window().maximize();
-    WebDriverWait wait = new WebDriverWait(wd, 10);
     WebElement items = wd.findElement(By.xpath("//span[@class='quantity']"));
 
     //добавление товара
-    for (int i=0; i<3; i++){
+    for (int i = 0; i < 3; i++) {
       wd.findElement(By.xpath("//div[@id='box-most-popular']//li[1]")).click();
       if (isElementPresent(wd, By.xpath("//select[@name='options[Size]']"))) {
         new Select(wd.findElement(By.xpath("//select[@name='options[Size]']"))).selectByVisibleText("Small");
@@ -278,7 +295,7 @@ public class GettingStarted extends TestBase {
       wd.navigate().refresh();
       wait.until(stalenessOf(items));
       items = wd.findElement(By.xpath("//span[@class='quantity']"));
-      wait.until(textToBePresentInElement(items, String.valueOf(i+1)));
+      wait.until(textToBePresentInElement(items, String.valueOf(i + 1)));
       wd.findElement(By.xpath("//li[@class='general-0']//a")).click();
     }
 
@@ -290,45 +307,53 @@ public class GettingStarted extends TestBase {
     List<WebElement> products = table.findElements(By.xpath(".//tr/td[@class='item']"));
 
     //удаление товара
-    for (int i=1; i<3; i++){
+    for (int i = 1; i < 3; i++) {
       List<WebElement> removeitem = wd.findElements(By.xpath("//li//button[contains(text(), 'Remove')]"));
       wait.until(visibilityOf(removeitem.get(0))).click();
       wait.until(stalenessOf(products.get(0)));
       products = table.findElements(By.xpath(".//tr/td[@class='item']"));
-      Assert.assertEquals(products.size(), 3-i);
+      Assert.assertEquals(products.size(), 3 - i);
     }
     wd.quit();
   }
 
-  private String newWindow(){
-    WebDriverWait wait = new WebDriverWait(wd, 5);
-    String mainWindow = wd.getWindowHandle();
-    wait.until(numberOfWindowsToBe(2));
-    Set<String> allWindows = wd.getWindowHandles();
-    String newWindow = null;
-    for (String window:allWindows){
-      if (!window.equals(mainWindow)){
-        newWindow = window;
-      }
-    }return newWindow;
-  }
-
-  @Test(enabled = true)
+  @Test(enabled = false)
   public void switchBetweenWindows() throws Exception {
     wd.get("http://localhost/litecart/admin/?app=countries&doc=countries");
     wd.manage().window().maximize();
-    WebDriverWait wait = new WebDriverWait(wd, 5);
     wd.findElement(By.name("username")).sendKeys("admin");
     wd.findElement(By.name("password")).sendKeys("admin");
     wd.findElement(By.name("login")).click();
     wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//a[@class='button']"))).click();
     List<WebElement> links = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//tr/td/a[@target]")));
     String mainWindow = wd.getWindowHandle();
-    for (WebElement link:links) {
+    for (WebElement link : links) {
       link.click();
       wd.switchTo().window(newWindow());
       wd.close();
       wd.switchTo().window(mainWindow);
+    }
+    wd.quit();
+  }
+
+  @Test(enabled = true)
+  public void checkLogs() throws Exception {
+    wd.get("http://localhost/litecart/admin/?app=catalog&doc=catalog&category_id=1");
+    wd.manage().window().maximize();
+    wd.findElement(By.name("username")).sendKeys("admin");
+    wd.findElement(By.name("password")).sendKeys("admin");
+    wd.findElement(By.name("login")).click();
+    //TimeUnit.SECONDS.sleep(3);
+    //System.out.println(wd.manage().logs().getAvailableLogTypes());
+    int numberOfPproducts = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//tr/td[3]/a[contains(text(), 'Duck')]"))).size();
+    for (int i=0; i<numberOfPproducts;i++) {
+      List<WebElement> products = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//tr/td[3]/a[contains(text(), 'Duck')]")));
+      products.get(i).click();
+      for (LogEntry l : wd.manage().logs().get("browser").getAll()) {
+        System.out.println(l);
+        wd.findElement(By.xpath("//li[@id='doc-catalog']//a")).click();
+        wd.findElement(By.xpath("//tr/td[3]/a[contains(text(), 'Ducks')]")).click();
+      }
     }
     wd.quit();
   }
