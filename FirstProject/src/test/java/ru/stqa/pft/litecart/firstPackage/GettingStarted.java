@@ -1,6 +1,7 @@
 package ru.stqa.pft.litecart.firstPackage;
 
 import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -358,7 +359,9 @@ public class GettingStarted extends TestBase {
   }
 
   private String newWindow(){
+    WebDriverWait wait = new WebDriverWait(wd, 5);
     String mainWindow = wd.getWindowHandle();
+    wait.until(numberOfWindowsToBe(2));
     Set<String> allWindows = wd.getWindowHandles();
     String newWindow = null;
     for (String window:allWindows){
@@ -377,43 +380,14 @@ public class GettingStarted extends TestBase {
     wd.findElement(By.name("password")).sendKeys("admin");
     wd.findElement(By.name("login")).click();
     wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//a[@class='button']"))).click();
-
-    wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//tr[2]/td/a[@target]"))).click();
+    List<WebElement> links = wd.findElements(By.xpath("//tr/td/a[@target]"));
     String mainWindow = wd.getWindowHandle();
-    wd.switchTo().window(newWindow());
-    wd.close();
-    wd.switchTo().window(mainWindow);
-
-    wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//tr[3]/td/a[@target]"))).click();
-    wd.switchTo().window(newWindow());
-    wd.close();
-    wd.switchTo().window(mainWindow);
-
-    wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//tr[6]/td/a[@target]"))).click();
-    wd.switchTo().window(newWindow());
-    wd.close();
-    wd.switchTo().window(mainWindow);
-
-    wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//tr[7]/td/a[@target]"))).click();
-    wd.switchTo().window(newWindow());
-    wd.close();
-    wd.switchTo().window(mainWindow);
-
-    wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//tr[8]/td/a[@target]"))).click();
-    wd.switchTo().window(newWindow());
-    wd.close();
-    wd.switchTo().window(mainWindow);
-
-    wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//tr[9]/td/a[@target]"))).click();
-    wd.switchTo().window(newWindow());
-    wd.close();
-    wd.switchTo().window(mainWindow);
-
-    wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//tr[10]/td/a[@target]"))).click();
-    wd.switchTo().window(newWindow());
-    wd.close();
-    wd.switchTo().window(mainWindow);
-
+    for (WebElement link:links) {
+      link.click();
+      wd.switchTo().window(newWindow());
+      wd.close();
+      wd.switchTo().window(mainWindow);
+    }
     wd.quit();
   }
 }
