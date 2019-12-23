@@ -1,12 +1,14 @@
 package ru.stqa.pft.litecart.firstPackage;
 
 import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import org.apache.commons.lang3.RandomStringUtils;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.JavascriptExecutor;
 import java.io.File;
@@ -88,7 +90,7 @@ public class GettingStarted extends TestBase {
     int numberOfCountries = wd.findElements(By.xpath("//tr[@class='row']")).size();
 
     for (int i = 0; i < numberOfCountries; i++) {
-      List<WebElement> we = wd.findElements(By.xpath("//tr[@class='row']"));
+      List<WebElement> we = wd.findElements(By.xpath("/td[5]/a[@href]"));
       WebElement w = we.get(i);
       if (Integer.parseInt(w.findElement(By.xpath("./td[6]")).getText().trim()) > 0) {
         w.findElement(By.xpath("./td[5]/a[@href]")).click();
@@ -256,7 +258,7 @@ public class GettingStarted extends TestBase {
     wd.quit();
   }
 
-  @Test(enabled = true)
+  @Test(enabled = false)
   public void addToCart() throws InterruptedException {
     wd.get("http://localhost/litecart/en/");
     wd.manage().window().maximize();
@@ -352,6 +354,66 @@ public class GettingStarted extends TestBase {
 
     //проверка размера списка за вычетом всех 3 товаров
     Assert.assertEquals(products.size(), 0);
+    wd.quit();
+  }
+
+  private String newWindow(){
+    String mainWindow = wd.getWindowHandle();
+    Set<String> allWindows = wd.getWindowHandles();
+    String newWindow = null;
+    for (String window:allWindows){
+      if (!window.equals(mainWindow)){
+        newWindow = window;
+      }
+    }return newWindow;
+  }
+
+  @Test(enabled = true)
+  public void switchBetweenWindows() throws Exception {
+    wd.get("http://localhost/litecart/admin/?app=countries&doc=countries");
+    wd.manage().window().maximize();
+    WebDriverWait wait = new WebDriverWait(wd, 5);
+    wd.findElement(By.name("username")).sendKeys("admin");
+    wd.findElement(By.name("password")).sendKeys("admin");
+    wd.findElement(By.name("login")).click();
+    wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//a[@class='button']"))).click();
+
+    wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//tr[2]/td/a[@target]"))).click();
+    String mainWindow = wd.getWindowHandle();
+    wd.switchTo().window(newWindow());
+    wd.close();
+    wd.switchTo().window(mainWindow);
+
+    wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//tr[3]/td/a[@target]"))).click();
+    wd.switchTo().window(newWindow());
+    wd.close();
+    wd.switchTo().window(mainWindow);
+
+    wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//tr[6]/td/a[@target]"))).click();
+    wd.switchTo().window(newWindow());
+    wd.close();
+    wd.switchTo().window(mainWindow);
+
+    wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//tr[7]/td/a[@target]"))).click();
+    wd.switchTo().window(newWindow());
+    wd.close();
+    wd.switchTo().window(mainWindow);
+
+    wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//tr[8]/td/a[@target]"))).click();
+    wd.switchTo().window(newWindow());
+    wd.close();
+    wd.switchTo().window(mainWindow);
+
+    wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//tr[9]/td/a[@target]"))).click();
+    wd.switchTo().window(newWindow());
+    wd.close();
+    wd.switchTo().window(mainWindow);
+
+    wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//tr[10]/td/a[@target]"))).click();
+    wd.switchTo().window(newWindow());
+    wd.close();
+    wd.switchTo().window(mainWindow);
+
     wd.quit();
   }
 }

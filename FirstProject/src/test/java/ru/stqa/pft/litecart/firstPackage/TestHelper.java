@@ -7,8 +7,9 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
-class TestHelper {
+class TestHelper{
 
   List<String> createListOf(List<WebElement> we) {
     List<String> newList = new ArrayList<>();
