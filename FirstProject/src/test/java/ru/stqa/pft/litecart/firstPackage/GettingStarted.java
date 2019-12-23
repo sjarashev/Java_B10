@@ -300,5 +300,36 @@ public class GettingStarted extends TestBase {
     wd.quit();
   }
 
-  
+  private String newWindow(){
+    WebDriverWait wait = new WebDriverWait(wd, 5);
+    String mainWindow = wd.getWindowHandle();
+    wait.until(numberOfWindowsToBe(2));
+    Set<String> allWindows = wd.getWindowHandles();
+    String newWindow = null;
+    for (String window:allWindows){
+      if (!window.equals(mainWindow)){
+        newWindow = window;
+      }
+    }return newWindow;
+  }
+
+  @Test(enabled = true)
+  public void switchBetweenWindows() throws Exception {
+    wd.get("http://localhost/litecart/admin/?app=countries&doc=countries");
+    wd.manage().window().maximize();
+    WebDriverWait wait = new WebDriverWait(wd, 5);
+    wd.findElement(By.name("username")).sendKeys("admin");
+    wd.findElement(By.name("password")).sendKeys("admin");
+    wd.findElement(By.name("login")).click();
+    wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//a[@class='button']"))).click();
+    List<WebElement> links = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//tr/td/a[@target]")));
+    String mainWindow = wd.getWindowHandle();
+    for (WebElement link:links) {
+      link.click();
+      wd.switchTo().window(newWindow());
+      wd.close();
+      wd.switchTo().window(mainWindow);
+    }
+    wd.quit();
+  }
 }
