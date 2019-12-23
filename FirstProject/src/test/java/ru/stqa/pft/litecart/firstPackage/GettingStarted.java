@@ -259,62 +259,28 @@ public class GettingStarted extends TestBase {
     wd.quit();
   }
 
-  @Test(enabled = false)
+  @Test(enabled = true)
   public void addToCart() throws InterruptedException {
     wd.get("http://localhost/litecart/en/");
     wd.manage().window().maximize();
     WebDriverWait wait = new WebDriverWait(wd, 10);
     WebElement items = wd.findElement(By.xpath("//span[@class='quantity']"));
 
-    //выбор первого товара
-    wd.findElement(By.xpath("//div[@id='box-most-popular']//li[1]")).click();
-    if (isElementPresent(wd, By.xpath("//select[@name='options[Size]']"))) {
-      new Select(wd.findElement(By.xpath("//select[@name='options[Size]']"))).selectByVisibleText("Small");
+    //добавление товара
+    for (int i=0; i<3; i++){
+      wd.findElement(By.xpath("//div[@id='box-most-popular']//li[1]")).click();
+      if (isElementPresent(wd, By.xpath("//select[@name='options[Size]']"))) {
+        new Select(wd.findElement(By.xpath("//select[@name='options[Size]']"))).selectByVisibleText("Small");
+      }
+      wd.findElement(By.xpath("//button[@name='add_cart_product']")).click();
+      Alert alert = wait.until(alertIsPresent());
+      alert.accept();
+      wd.navigate().refresh();
+      wait.until(stalenessOf(items));
+      items = wd.findElement(By.xpath("//span[@class='quantity']"));
+      wait.until(textToBePresentInElement(items, String.valueOf(i+1)));
+      wd.findElement(By.xpath("//li[@class='general-0']//a")).click();
     }
-    //добавление первого товара в корзину
-    wd.findElement(By.xpath("//button[@name='add_cart_product']")).click();
-    Alert alert = wait.until(alertIsPresent());
-    alert.accept();
-    wd.navigate().refresh();
-    wait.until(stalenessOf(items));
-    items = wd.findElement(By.xpath("//span[@class='quantity']"));
-
-    //ожидание обновления счетчика товаров в корзине
-    wait.until(textToBePresentInElement(items, "1"));
-    wd.findElement(By.xpath("//li[@class='general-0']//a")).click();
-
-    //выбор второго товара
-    wd.findElement(By.xpath("//div[@id='box-most-popular']//li[1]")).click();
-    if (isElementPresent(wd, By.xpath("//select[@name='options[Size]']"))) {
-      new Select(wd.findElement(By.xpath("//select[@name='options[Size]']"))).selectByVisibleText("Small");
-    }
-    //добавление второго товара в корзину
-    wd.findElement(By.xpath("//button[@name='add_cart_product']")).click();
-    alert = wait.until(alertIsPresent());
-    alert.accept();
-    wd.navigate().refresh();
-    wait.until(stalenessOf(items));
-    items = wd.findElement(By.xpath("//span[@class='quantity']"));
-
-    //ожидание обновления счетчика товаров в корзине
-    wait.until(textToBePresentInElement(items, "2"));
-    wd.findElement(By.xpath("//li[@class='general-0']//a")).click();
-
-    //выбор третьего товара
-    wd.findElement(By.xpath("//div[@id='box-most-popular']//li[1]")).click();
-    if (isElementPresent(wd, By.xpath("//select[@name='options[Size]']"))) {
-      new Select(wd.findElement(By.xpath("//select[@name='options[Size]']"))).selectByVisibleText("Small");
-    }
-    //добавление третьего товара в корзину
-    wd.findElement(By.xpath("//button[@name='add_cart_product']")).click();
-    alert = wait.until(alertIsPresent());
-    alert.accept();
-    wd.navigate().refresh();
-    wait.until(stalenessOf(items));
-    items = wd.findElement(By.xpath("//span[@class='quantity']"));
-
-    //ожидание обновления счетчика товаров в корзине
-    wait.until(textToBePresentInElement(items, "3"));
 
     //переход в корзину
     wd.findElement(By.xpath("//a[contains(text(),'Checkout »')]")).click();
@@ -322,39 +288,15 @@ public class GettingStarted extends TestBase {
     //создание списка товаров
     WebElement table = wd.findElement(By.xpath("//div[@id='checkout-summary-wrapper']"));
     List<WebElement> products = table.findElements(By.xpath(".//tr/td[@class='item']"));
-    List<WebElement> removeitem = wd.findElements(By.xpath("//div[@class='viewport']//li//p[4]/button"));
 
-    //удаление первого товара
-    wait.until(visibilityOf(removeitem.get(0))).click();
-    removeitem = wd.findElements(By.xpath("//div[@class='viewport']//li//p[4]/button"));
-
-    //проверка отсутствия первого удаленного товара в списке
-    wait.until(stalenessOf(products.get(0)));
-    products = table.findElements(By.xpath(".//tr/td[@class='item']"));
-
-    //проверка размера списка за вычетом первого товара
-    Assert.assertEquals(products.size(), 2);
-
-    //удаление второго товара
-    wait.until(visibilityOf(removeitem.get(0))).click();
-    removeitem = wd.findElements(By.xpath("//div[@class='viewport']//li//p[4]/button"));
-
-    //проверка отсутствия второго удаленного товара в списке
-    wait.until(stalenessOf(products.get(0)));
-    products = table.findElements(By.xpath(".//tr/td[@class='item']"));
-
-    //проверка размера списка за вычетом 2 товаров
-    Assert.assertEquals(products.size(), 1);
-
-    //удаление третьего товара
-    wait.until(visibilityOf(removeitem.get(0))).click();
-
-    //проверка отсутствия последнего удаленного товара в списке
-    wait.until(stalenessOf(products.get(0)));
-    products = table.findElements(By.xpath(".//tr/td[@class='item']"));
-
-    //проверка размера списка за вычетом всех 3 товаров
-    Assert.assertEquals(products.size(), 0);
+    //удаление товара
+    for (int i=1; i<3; i++){
+      List<WebElement> removeitem = wd.findElements(By.xpath("//li//button[contains(text(), 'Remove')]"));
+      wait.until(visibilityOf(removeitem.get(0))).click();
+      wait.until(stalenessOf(products.get(0)));
+      products = table.findElements(By.xpath(".//tr/td[@class='item']"));
+      Assert.assertEquals(products.size(), 3-i);
+    }
     wd.quit();
   }
 
@@ -371,7 +313,7 @@ public class GettingStarted extends TestBase {
     }return newWindow;
   }
 
-  @Test(enabled = true)
+  @Test(enabled = false)
   public void switchBetweenWindows() throws Exception {
     wd.get("http://localhost/litecart/admin/?app=countries&doc=countries");
     wd.manage().window().maximize();

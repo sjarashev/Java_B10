@@ -9,11 +9,11 @@ import org.testng.annotations.BeforeMethod;
 import java.util.concurrent.TimeUnit;
 
 public class TestBase {
-  EdgeDriver wd;
+  FirefoxDriver wd;
 
   @BeforeMethod
   public void init() {
-    wd = new EdgeDriver();
+    wd = new FirefoxDriver();
     wd.manage().timeouts().implicitlyWait(500, TimeUnit.MILLISECONDS);
   }
 }
