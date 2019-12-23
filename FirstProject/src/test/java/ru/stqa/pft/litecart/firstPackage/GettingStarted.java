@@ -111,7 +111,7 @@ public class GettingStarted extends TestBase {
       WebElement w = we.get(i);
       if (Integer.parseInt(w.findElement(By.xpath("./td[6]")).getText().trim()) > 0) {
         w.findElement(By.xpath("./td[5]/a[@href]")).click();
-        List<WebElement> zones = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//table[@class='dataTable']//tr/td[3]"))n);
+        List<WebElement> zones = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//table[@class='dataTable']//tr/td[3]")));
         List<String> listOfZones = testHelper.createListOf(zones);
         testHelper.sort(listOfZones);
         wd.findElement(By.xpath("//li[3]//a[1]")).click();
