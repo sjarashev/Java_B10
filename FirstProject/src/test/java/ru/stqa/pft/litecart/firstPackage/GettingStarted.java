@@ -322,7 +322,7 @@ public class GettingStarted extends TestBase {
     wd.findElement(By.name("password")).sendKeys("admin");
     wd.findElement(By.name("login")).click();
     wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//a[@class='button']"))).click();
-    List<WebElement> links = wd.findElements(By.xpath("//tr/td/a[@target]"));
+    List<WebElement> links = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//tr/td/a[@target]")));
     String mainWindow = wd.getWindowHandle();
     for (WebElement link:links) {
       link.click();
