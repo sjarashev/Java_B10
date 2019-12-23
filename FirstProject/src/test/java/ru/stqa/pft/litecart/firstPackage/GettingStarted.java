@@ -74,7 +74,6 @@ public class GettingStarted extends TestBase {
         }
       }
     }
-    wd.quit();
   }
 
   @Test(enabled = false)
@@ -90,10 +89,9 @@ public class GettingStarted extends TestBase {
         System.out.println(sticker);
       }
     }
-    wd.quit();
   }
 
-  @Test(enabled = false)
+  @Test(enabled = true)
   public void checkAlphaOrder() throws InterruptedException {
     wd.get("http://localhost/litecart/admin/?app=countries&doc=countries");
     wd.manage().window().maximize();
@@ -103,23 +101,22 @@ public class GettingStarted extends TestBase {
 
     TestHelper testHelper = new TestHelper();
 
-    List<WebElement> countries = wd.findElements(By.xpath("//tr//td[5]/a"));
+    List<WebElement> countries = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//tr//td[5]/a")));
     List<String> listOfCountries = testHelper.createListOf(countries);
     testHelper.sort(listOfCountries);
-    int numberOfCountries = wd.findElements(By.xpath("//tr[@class='row']")).size();
+    int numberOfCountries = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//tr[@class='row']"))).size();
 
     for (int i = 0; i < numberOfCountries; i++) {
-      List<WebElement> we = wd.findElements(By.xpath("/td[5]/a[@href]"));
+      List<WebElement> we = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("/td[5]/a[@href]")));
       WebElement w = we.get(i);
       if (Integer.parseInt(w.findElement(By.xpath("./td[6]")).getText().trim()) > 0) {
         w.findElement(By.xpath("./td[5]/a[@href]")).click();
-        List<WebElement> zones = wd.findElements(By.xpath("//table[@class='dataTable']//tr/td[3]"));
+        List<WebElement> zones = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//table[@class='dataTable']//tr/td[3]"))n);
         List<String> listOfZones = testHelper.createListOf(zones);
         testHelper.sort(listOfZones);
         wd.findElement(By.xpath("//li[3]//a[1]")).click();
       }
     }
-    wd.quit();
   }
 
   @Test(enabled = false)
@@ -143,7 +140,6 @@ public class GettingStarted extends TestBase {
       testHelper.sort(listOfZones);
       wd.findElement(By.xpath("//li[6]//a[1]")).click();
     }
-    wd.quit();
   }
 
   @Test(enabled = false)
@@ -173,7 +169,6 @@ public class GettingStarted extends TestBase {
     wd.findElement(By.xpath("//div[@class='content']//div//a[contains(text(),'Home')]")).click();
 
     Assert.assertEquals(pd1.productInfo(), pd2.productInfo());
-    wd.quit();
   }
 
   @Test(enabled = false)
@@ -206,7 +201,6 @@ public class GettingStarted extends TestBase {
     type(By.name("password"), "123");
     wd.findElement(By.name("login")).click();
     wd.findElement(By.linkText("Logout")).click();
-    wd.quit();
   }
 
   @Test(enabled = false)
@@ -274,7 +268,6 @@ public class GettingStarted extends TestBase {
 
     //сохранение формы
     wd.findElement(By.name("save")).click();
-    wd.quit();
   }
 
   @Test(enabled = false)
@@ -314,7 +307,6 @@ public class GettingStarted extends TestBase {
       products = table.findElements(By.xpath(".//tr/td[@class='item']"));
       Assert.assertEquals(products.size(), 3 - i);
     }
-    wd.quit();
   }
 
   @Test(enabled = false)
@@ -333,10 +325,9 @@ public class GettingStarted extends TestBase {
       wd.close();
       wd.switchTo().window(mainWindow);
     }
-    wd.quit();
   }
 
-  @Test(enabled = true)
+  @Test(enabled = false)
   public void checkLogs() throws Exception {
     wd.get("http://localhost/litecart/admin/?app=catalog&doc=catalog&category_id=1");
     wd.manage().window().maximize();
@@ -351,6 +342,5 @@ public class GettingStarted extends TestBase {
       wd.findElement(By.xpath("//li[@id='doc-catalog']//a")).click();
       wd.findElement(By.xpath("//tr/td[3]/a[contains(text(), 'Ducks')]")).click();
     }
-    wd.quit();
   }
 }
