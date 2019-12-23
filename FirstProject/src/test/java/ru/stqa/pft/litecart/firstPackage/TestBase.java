@@ -10,12 +10,12 @@ import org.testng.annotations.BeforeMethod;
 import java.util.concurrent.TimeUnit;
 
 public class TestBase {
-  public FirefoxDriver wd;
+  public ChromeDriver wd;
   public WebDriverWait wait;
 
   @BeforeMethod
   public void init() {
-    wd = new FirefoxDriver();
+    wd = new ChromeDriver();
     wait = new WebDriverWait(wd, 10);
   }
 }

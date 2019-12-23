@@ -336,25 +336,5 @@ public class GettingStarted extends TestBase {
     wd.quit();
   }
 
-  @Test(enabled = true)
-  public void checkLogs() throws Exception {
-    wd.get("http://localhost/litecart/admin/?app=catalog&doc=catalog&category_id=1");
-    wd.manage().window().maximize();
-    wd.findElement(By.name("username")).sendKeys("admin");
-    wd.findElement(By.name("password")).sendKeys("admin");
-    wd.findElement(By.name("login")).click();
-    //TimeUnit.SECONDS.sleep(3);
-    //System.out.println(wd.manage().logs().getAvailableLogTypes());
-    int numberOfPproducts = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//tr/td[3]/a[contains(text(), 'Duck')]"))).size();
-    for (int i=0; i<numberOfPproducts;i++) {
-      List<WebElement> products = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//tr/td[3]/a[contains(text(), 'Duck')]")));
-      products.get(i).click();
-      for (LogEntry l : wd.manage().logs().get("browser").getAll()) {
-        System.out.println(l);
-        wd.findElement(By.xpath("//li[@id='doc-catalog']//a")).click();
-        wd.findElement(By.xpath("//tr/td[3]/a[contains(text(), 'Ducks')]")).click();
-      }
-    }
-    wd.quit();
-  }
+  
 }
