@@ -9,7 +9,7 @@ import java.util.List;
 
 public class DeleteContactTest extends TestBase {
 
-  @Test
+  /*@Test
   public void testDeleteContact() {
     if (app.getContactHelper().thereIsNoContact()){
       app.getContactHelper().createContact(new ContactData("David", "John", "DJ", "CEO"));
@@ -26,5 +26,5 @@ public class DeleteContactTest extends TestBase {
     Assert.assertEquals(before,after);
 
     app.logout();
-  }
+  }*/
 }

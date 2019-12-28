@@ -47,7 +47,7 @@ public class ContactHelper extends HelperBase {
     click(By.linkText("home page"));
   }
 
-  public void fillContactForm(ContactData contactData, boolean creation) {
+  /*public void fillContactForm(ContactData contactData, boolean creation) {
     if (creation) {
       try {
         new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
@@ -86,7 +86,7 @@ public class ContactHelper extends HelperBase {
     g.fillGroupForm(group);
     g.submitGroupCreation();
     gotoAddContactPage();
-  }
+  }*/
 
   private void fillPartialContactForm(ContactData contactData) {
     type(By.name("firstname"), contactData.getName());
