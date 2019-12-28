@@ -12,11 +12,11 @@ public class DeleteGroupTest extends TestBase {
   public void ensurePreconditions(){
     app.goTo().groupPage();
     if (app.group().list().size()==0){
-      app.group().create(new GroupData("group", "header", "footer"));
+      app.group().create(new GroupData().withName("group").withHeader("header").withFooter("footer"));
     }
   }
 
-  @Test(enabled = false)
+  @Test(enabled = true)
   public void testDeleteGroup(){
     List<GroupData> before = app.group().list();
     int index = before.size() -1;

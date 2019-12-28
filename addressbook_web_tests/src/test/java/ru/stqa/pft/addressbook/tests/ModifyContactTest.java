@@ -17,7 +17,7 @@ public class ModifyContactTest extends TestBase {
     }
   }
 
-  @Test(enabled = true)
+  @Test(enabled = false)
   public void testModifyContact() throws InterruptedException {
     List<ContactData> before = app.contact().list();
     ContactData contactForm = new ContactData(before.get(before.size()-1).getId(),"Mark", "Robinson", "MR", "COO");
