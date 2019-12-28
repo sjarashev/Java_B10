@@ -9,11 +9,11 @@ import java.util.List;
 
 public class AddContactTest extends TestBase {
 
-  @Test(enabled = false)
+  @Test(enabled = true)
   public void testAddContact() {
     ContactData conData = new ContactData("David", "John", "DJ", "CEO");
-    List<ContactData> before = app.getContactHelper().getContactList();
-    app.getContactHelper().gotoAddContactPage();
+    List<ContactData> before = app.contact().list();
+    app.contact().gotoAddContactPage();
     conData.setCompanyName("ABC");
     conData.setCompanyAddress("555 First Line");
     conData.setHomePhone("55555555");
@@ -28,10 +28,10 @@ public class AddContactTest extends TestBase {
     conData.setSecondPhone("101010");
     conData.setNote("bla");
     conData.setGroup("group");
-    app.getContactHelper().fillContactForm(conData, true);
-    app.getContactHelper().submitForm();
-    app.goTo().gotoHomePage();
-    List<ContactData> after = app.getContactHelper().getContactList();
+    app.contact().fillContactForm(conData, true);
+    app.contact().submitForm();
+    app.goTo().homePage();
+    List<ContactData> after = app.contact().list();
     Assert.assertEquals(after.size(), before.size() + 1);
 
     before.add(conData);
@@ -39,7 +39,5 @@ public class AddContactTest extends TestBase {
     before.sort(byId);
     after.sort(byId);
     Assert.assertEquals(before, after);
-
-    app.logout();
   }
 }
