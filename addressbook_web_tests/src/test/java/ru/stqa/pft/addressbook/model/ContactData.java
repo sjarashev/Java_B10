@@ -4,11 +4,11 @@ import java.util.Objects;
 
 public class ContactData {
 
-  private int id;
-  private final String name;
-  private final String lastName;
-  private final String nickName;
-  private final String title;
+  private int id = Integer.MAX_VALUE;
+  private String name;
+  private String lastName;
+  private String nickName;
+  private String title;
   private String companyName;
   private String companyAddress;
   private String companyURL;
@@ -24,24 +24,29 @@ public class ContactData {
   private String secondAddress;
   private String group;
 
-  public ContactData(String name, String lastName, String nickName, String title) {
-    this.id = Integer.MAX_VALUE;
+  public ContactData withName(String name) {
     this.name = name;
-    this.lastName = lastName;
-    this.nickName = nickName;
-    this.title = title;
+    return this;
   }
 
-  public ContactData(int id, String name, String lastName, String nickName, String title) {
-    this.id = id;
-    this.name = name;
+  public ContactData withLastName(String lastName) {
     this.lastName = lastName;
-    this.nickName = nickName;
-    this.title = title;
+    return this;
   }
 
-  public void setId(int id) {
+  public ContactData withNickName(String nickName) {
+    this.nickName = nickName;
+    return this;
+  }
+
+  public ContactData withTitle(String title) {
+    this.title = title;
+    return this;
+  }
+
+  public ContactData withId(int id) {
     this.id = id;
+    return this;
   }
 
   public void setCompanyName(String companyName) {

@@ -13,14 +13,15 @@ public class ModifyContactTest extends TestBase {
   @BeforeMethod
   public void ensurePreconditions(){
     if (app.contact().list().size()==0){
-      app.contact().create(new ContactData("David", "John", "DJ", "CEO"));
+      app.contact().create(new ContactData().withName("David").withLastName("John").withNickName("DJ").withTitle("CEO"));
     }
   }
 
-  @Test(enabled = false)
+  @Test(enabled = true)
   public void testModifyContact() throws InterruptedException {
     List<ContactData> before = app.contact().list();
-    ContactData contactForm = new ContactData(before.get(before.size()-1).getId(),"Mark", "Robinson", "MR", "COO");
+    ContactData contactForm = new ContactData().withId(before.get(before.size()-1).getId())
+            .withName("Mark").withLastName("Robinson").withNickName("MR").withTitle("COO");
     contactForm.setCompanyName("CBA");
     contactForm.setCompanyAddress("777 Third Line");
     contactForm.setHomePhone("797979");

@@ -17,7 +17,7 @@ public class ModifyGroupTest extends TestBase {
     }
   }
 
-  @Test(enabled = true)
+  @Test(enabled = false)
   public void testModifyGroup() {
     List<GroupData> before = app.group().list();
     int index = before.size()-1;

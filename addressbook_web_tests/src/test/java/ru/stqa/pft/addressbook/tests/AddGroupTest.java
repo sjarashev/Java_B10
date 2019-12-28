@@ -8,7 +8,7 @@ import java.util.List;
 
 public class AddGroupTest extends TestBase {
 
-  @Test(enabled = true)
+  @Test(enabled = false)
   public void testAddGroup() {
     app.goTo().groupPage();
     List<GroupData> before = app.group().list();

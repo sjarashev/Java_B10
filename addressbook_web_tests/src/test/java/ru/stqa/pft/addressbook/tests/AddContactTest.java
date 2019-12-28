@@ -9,9 +9,9 @@ import java.util.List;
 
 public class AddContactTest extends TestBase {
 
-  @Test(enabled = false)
+  @Test(enabled = true)
   public void testAddContact() {
-    ContactData conData = new ContactData("David", "John", "DJ", "CEO");
+    ContactData conData = new ContactData().withName("David").withLastName("John").withNickName("DJ").withTitle("CEO");
     List<ContactData> before = app.contact().list();
     app.contact().gotoAddContactPage();
     conData.setCompanyName("ABC");
