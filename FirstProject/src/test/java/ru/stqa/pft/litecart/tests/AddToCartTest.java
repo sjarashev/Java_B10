@@ -5,10 +5,15 @@ import org.testng.annotations.Test;
 public class AddToCartTest extends TestBase {
 
   @Test(enabled = true)
-  public void addToCart() throws InterruptedException {
-    app.fillCartWithProducts(3);
-    app.goToCheckout();
-    app.deleteProductsFromTheCart(3);
-    app.quit();
+  public void addToCart(){
+    clientApp.openWebPage();
+    clientApp.fillCartWithProducts(3);
+    clientApp.deleteProductsFromTheCart(3);
+  }
+
+  @Test (enabled = true)
+  public void startStart(){
+    adminApp.openWebPage();
+    adminApp.d();
   }
 }

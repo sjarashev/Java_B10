@@ -2,9 +2,12 @@ package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ContactHelper extends HelperBase {
 
@@ -20,16 +23,16 @@ public class ContactHelper extends HelperBase {
     click(By.linkText("add new"));
   }
 
-  public void modifyContactPage() {
-    click(By.xpath("//img[@alt='Edit']"));
+  public void modifyContactPage(int index) {
+    wd.findElements(By.xpath("//img[@alt='Edit']")).get(index).click();
   }
 
   public void submitUpdatedContact() {
     click(By.name("update"));
   }
 
-  public void selectContact() {
-    click(By.name("selected[]"));
+  public void selectContact(int index) {
+    wd.findElements(By.name("selected[]")).get(index).click();
   }
 
   public void deleteContact() {
@@ -40,11 +43,21 @@ public class ContactHelper extends HelperBase {
     closeAttentionDialog();
   }
 
-  public void returnToHomePage() {
+  private void returnToHomePage() {
     click(By.linkText("home page"));
   }
 
   public void fillContactForm(ContactData contactData, boolean creation) {
+    if (creation) {
+      try {
+        new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+      } catch (Exception e) {
+        createGroup();
+        new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+      }
+    } else {
+      Assert.assertFalse(isElementPresent(By.name("new_group")));
+    }
     type(By.name("firstname"), contactData.getName());
     type(By.name("lastname"), contactData.getLastName());
     type(By.name("nickname"), contactData.getNickName());
@@ -62,11 +75,17 @@ public class ContactHelper extends HelperBase {
     type(By.name("notes"), contactData.getNote());
     type(By.name("phone2"), contactData.getSecondPhone());
     type(By.name("address2"), contactData.getSecondAddress());
-    if (creation) {
-      new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
-    } else {
-      Assert.assertFalse(isElementPresent(By.name("new_group")));
-    }
+  }
+
+  private void createGroup(){
+    NavigationHelper n = new NavigationHelper(wd);
+    GroupHelper g = new GroupHelper(wd);
+    n.gotoGroupPage();
+    GroupData group = new GroupData("group", "header", "footer");
+    g.initGroupPage();
+    g.fillGroupForm(group);
+    g.submitGroupCreation();
+    gotoAddContactPage();
   }
 
   private void fillPartialContactForm(ContactData contactData) {
@@ -75,14 +94,31 @@ public class ContactHelper extends HelperBase {
     type(By.name("nickname"), contactData.getNickName());
     type(By.name("title"), contactData.getTitle());
   }
-    public boolean thereIsNoContact() {
-      return !isElementPresent(By.name("selected[]"));
-    }
 
-    public void createContact (ContactData contact){
-      gotoAddContactPage();
-      fillPartialContactForm(contact);
-      submitForm();
-      returnToHomePage();
-    }
+  public boolean thereIsNoContact() {
+    return !isElementPresent(By.name("selected[]"));
   }
+
+  public void createContact(ContactData contact) {
+    gotoAddContactPage();
+    fillPartialContactForm(contact);
+    submitForm();
+    returnToHomePage();
+  }
+
+  public int getContactCount() {
+    return wd.findElements(By.name("selected[]")).size();
+  }
+
+  public List<ContactData> getContactList() {
+    List<ContactData> contacts = new ArrayList<>();
+    List<WebElement> elements = wd.findElements(By.xpath("//tr[@name='entry']"));
+    for (WebElement element : elements) {
+      String name = element.findElement(By.xpath("./td[3]")).getText();
+      int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
+      ContactData contact = new ContactData(id, name, null, null, null);
+      contacts.add(contact);
+    }
+    return contacts;
+  }
+}

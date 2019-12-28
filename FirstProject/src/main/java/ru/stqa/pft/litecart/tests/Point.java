@@ -1,4 +1,4 @@
-package ru.stqa.pft.litecart.firstPackage;
+package ru.stqa.pft.litecart.tests;
 
 public class Point {
 

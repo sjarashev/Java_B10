@@ -5,15 +5,14 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 
 public class ProductPage extends Page {
+
   public ProductPage(WebDriver driver) {
     super(driver);
-    PageFactory.initElements(driver, this);
   }
 
   @FindBy(xpath = "//select[@name='options[Size]']")
@@ -29,15 +28,15 @@ public class ProductPage extends Page {
   private WebElement goToMainPage;
 
   @FindBy(xpath = "//a[contains(text(),'Checkout »')]")
-  public WebElement checkout;
+  private WebElement checkout;
 
-  public void addProductToTheCart() {
+  public void addProductToCart() {
     addProduct.click();
     Alert alert = wait.until(alertIsPresent());
     alert.accept();
   }
 
-  public void selectSizeOfTheProduct() {
+  public void selectSizeOfProduct() {
     if (isElementPresent(By.xpath("//select[@name='options[Size]']"))) {
       new Select(sizeSelectionDropdown).selectByVisibleText("Small");
     }
@@ -55,5 +54,9 @@ public class ProductPage extends Page {
 
   public void goToMainPage(){
     goToMainPage.click();
+  }
+
+  public void goToCheckout() {
+    checkout.click();
   }
 }

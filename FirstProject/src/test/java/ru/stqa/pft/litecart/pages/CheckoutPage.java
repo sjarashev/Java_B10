@@ -13,7 +13,6 @@ public class CheckoutPage extends Page {
 
   public CheckoutPage(WebDriver driver) {
     super(driver);
-    PageFactory.initElements(driver, this);
   }
 
   public void deleteProductFromTheCart(int number) {

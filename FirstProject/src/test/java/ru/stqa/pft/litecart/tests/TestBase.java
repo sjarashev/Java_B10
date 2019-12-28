@@ -1,14 +1,26 @@
 package ru.stqa.pft.litecart.tests;
 
-import org.openqa.selenium.remote.BrowserType;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-import ru.stqa.pft.litecart.app.Application;
+import ru.stqa.pft.litecart.app.AdminApplication;
+import ru.stqa.pft.litecart.app.ClientApplication;
 
 public class TestBase {
-  final Application app = new Application(BrowserType.FIREFOX);
+  ClientApplication clientApp;
+  AdminApplication adminApp;
+  private WebDriver driver;
 
   @BeforeMethod
-  public void init() {
-    app.openWebPage();
+  public void start() {
+    driver = new FirefoxDriver();
+    clientApp = new ClientApplication(driver);
+    adminApp = new AdminApplication(driver);
+  }
+
+  @AfterMethod
+  public void stop() {
+    driver.quit();
   }
 }

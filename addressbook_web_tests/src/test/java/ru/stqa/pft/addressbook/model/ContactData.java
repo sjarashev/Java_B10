@@ -1,11 +1,14 @@
 package ru.stqa.pft.addressbook.model;
 
+import java.util.Objects;
+
 public class ContactData {
 
-  private String name;
-  private String lastName;
-  private String nickName;
-  private String title;
+  private int id;
+  private final String name;
+  private final String lastName;
+  private final String nickName;
+  private final String title;
   private String companyName;
   private String companyAddress;
   private String companyURL;
@@ -22,10 +25,23 @@ public class ContactData {
   private String group;
 
   public ContactData(String name, String lastName, String nickName, String title) {
+    this.id = 0;
     this.name = name;
     this.lastName = lastName;
     this.nickName = nickName;
     this.title = title;
+  }
+
+  public ContactData(int id, String name, String lastName, String nickName, String title) {
+    this.id = id;
+    this.name = name;
+    this.lastName = lastName;
+    this.nickName = nickName;
+    this.title = title;
+  }
+
+  public void setId(int id) {
+    this.id = id;
   }
 
   public void setCompanyName(String companyName) {
@@ -154,6 +170,30 @@ public class ContactData {
 
   public String getGroup() {
     return group;
+  }
+
+  public int getId() {return id;}
+
+  @Override
+  public String toString() {
+    return "ContactData{" +
+            "id='" + id + '\'' +
+            ", name='" + name + '\'' +
+            '}';
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    ContactData that = (ContactData) o;
+    return id == that.id &&
+            Objects.equals(name, that.name);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, name);
   }
 }
 

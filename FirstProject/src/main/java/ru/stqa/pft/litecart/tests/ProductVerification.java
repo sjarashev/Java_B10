@@ -1,4 +1,4 @@
-package ru.stqa.pft.litecart.firstPackage;
+package ru.stqa.pft.litecart.tests;
 
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;

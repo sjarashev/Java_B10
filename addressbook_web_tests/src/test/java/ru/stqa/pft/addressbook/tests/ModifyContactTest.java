@@ -1,17 +1,22 @@
 package ru.stqa.pft.addressbook.tests;
 
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.*;
+
+import java.util.HashSet;
+import java.util.List;
 
 public class ModifyContactTest extends TestBase {
 
   @Test
-  public void testModifyContact() {
+  public void testModifyContact() throws InterruptedException {
     if (app.getContactHelper().thereIsNoContact()){
       app.getContactHelper().createContact(new ContactData("David", "John", "DJ", "CEO"));
     }
-    ContactData conData = new ContactData("Mark", "Robinson", "MR", "COO");
-    app.getContactHelper().modifyContactPage();
+    List<ContactData> before = app.getContactHelper().getContactList();
+    app.getContactHelper().modifyContactPage(before.size()-1);
+    ContactData conData = new ContactData(before.get(before.size()-1).getId(),"Mark", "Robinson", "MR", "COO");
     conData.setCompanyName("CBA");
     conData.setCompanyAddress("777 Third Line");
     conData.setHomePhone("797979");
@@ -29,6 +34,13 @@ public class ModifyContactTest extends TestBase {
     app.getContactHelper().fillContactForm(conData, false);
     app.getContactHelper().submitUpdatedContact();
     app.getNavigationHelper().gotoHomePage();
+    List<ContactData> after = app.getContactHelper().getContactList();
+    Assert.assertEquals(after.size(), before.size());
+
+    before.remove(before.size()-1);
+    before.add(conData);
+    Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));
+
     app.logout();
   }
 }
