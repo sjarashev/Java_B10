@@ -80,7 +80,7 @@ public class ContactHelper extends HelperBase {
   private void createGroup(){
     NavigationHelper n = new NavigationHelper(wd);
     GroupHelper g = new GroupHelper(wd);
-    n.gotoGroupPage();
+    n.groupPage();
     GroupData group = new GroupData("group", "header", "footer");
     g.initGroupPage();
     g.fillGroupForm(group);

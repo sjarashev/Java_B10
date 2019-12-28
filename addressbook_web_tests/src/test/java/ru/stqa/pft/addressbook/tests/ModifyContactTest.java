@@ -5,12 +5,11 @@ import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.*;
 
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
 
 public class ModifyContactTest extends TestBase {
 
-  @Test
+  @Test(enabled = false)
   public void testModifyContact() throws InterruptedException {
     if (app.getContactHelper().thereIsNoContact()){
       app.getContactHelper().createContact(new ContactData("David", "John", "DJ", "CEO"));
@@ -34,7 +33,7 @@ public class ModifyContactTest extends TestBase {
     conData.setGroup(null);
     app.getContactHelper().fillContactForm(conData, false);
     app.getContactHelper().submitUpdatedContact();
-    app.getNavigationHelper().gotoHomePage();
+    app.goTo().gotoHomePage();
     List<ContactData> after = app.getContactHelper().getContactList();
     Assert.assertEquals(after.size(), before.size());
 
