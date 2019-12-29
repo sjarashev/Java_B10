@@ -49,60 +49,74 @@ public class ContactData {
     return this;
   }
 
-  public void setCompanyName(String companyName) {
+  public ContactData withCompanyName(String companyName) {
     this.companyName = companyName;
+    return this;
   }
 
-  public void setCompanyAddress(String companyAddress) {
+  public ContactData withCompanyAddress(String companyAddress) {
     this.companyAddress = companyAddress;
+    return this;
   }
 
-  public void setWorkPhone(String workPhone) {
+  public ContactData withWorkPhone(String workPhone) {
     this.workPhone = workPhone;
+    return this;
   }
 
-  public void setMobilePhone(String mobilePhone) {
+  public ContactData withMobilePhone(String mobilePhone) {
     this.mobilePhone = mobilePhone;
+    return this;
   }
 
-  public void setHomePhone(String homePhone) {
+  public ContactData withHomePhone(String homePhone) {
     this.homePhone = homePhone;
+    return this;
   }
 
-  public void setEmail(String email) {
+  public ContactData withEmail(String email) {
     this.email = email;
+    return this;
   }
 
-  public void setCompanyURL(String companyURL) {
+  public ContactData withCompanyURL(String companyURL) {
     this.companyURL = companyURL;
+    return this;
   }
 
-  public void setYear(String year) {
+  public ContactData withYear(String year) {
     this.year = year;
+    return this;
   }
 
-  public void setMonth(String month) {
+  public ContactData withMonth(String month) {
     this.month = month;
+    return this;
   }
 
-  public void setDay(String day) {
+  public ContactData withDay(String day) {
     this.day = day;
+    return this;
   }
 
-  public void setNote(String note) {
+  public ContactData withNote(String note) {
     this.note = note;
+    return this;
   }
 
-  public void setSecondPhone(String secondPhone) {
+  public ContactData withSecondPhone(String secondPhone) {
     this.secondPhone = secondPhone;
+    return this;
   }
 
-  public void setSecondAddress(String secondAddress) {
+  public ContactData withSecondAddress(String secondAddress) {
     this.secondAddress = secondAddress;
+    return this;
   }
 
-  public void setGroup(String group) {
+  public ContactData withGroup(String group) {
     this.group = group;
+    return this;
   }
 
   public String getName() {
@@ -192,12 +206,14 @@ public class ContactData {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     ContactData that = (ContactData) o;
-    return Objects.equals(name, that.name);
+    return id == that.id &&
+            Objects.equals(name, that.name) &&
+            Objects.equals(lastName, that.lastName);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name);
+    return Objects.hash(id, name, lastName);
   }
 }
 
