@@ -11,6 +11,7 @@ public class AddContactTest extends TestBase {
 
   @Test(enabled = true)
   public void testAddContact() {
+    app.goTo().homePage();
     Contacts before = app.contact().all();
     ContactData contactForm = new ContactData().withName("David").withLastName("John").withNickName("DJ").withTitle("CEO")
     .withCompanyName("ABC").
@@ -28,7 +29,6 @@ public class AddContactTest extends TestBase {
             withNote("bla").
             withGroup("group");
     app.contact().createNew(contactForm);
-    app.goTo().homePage();
     Contacts after = app.contact().all();
     assertThat(after.size(), equalTo(before.size() + 1));
     assertThat(after, equalTo(

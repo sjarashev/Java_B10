@@ -1,6 +1,5 @@
 package ru.stqa.pft.addressbook.tests;
 
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.*;
@@ -12,8 +11,9 @@ public class DeleteContactTest extends TestBase {
 
   @BeforeMethod
   public void ensurePreconditions(){
+    app.goTo().homePage();
     if (app.contact().all().size()==0){
-      app.contact().create(new ContactData().withName("David").withLastName("John").withNickName("DJ").withTitle("CEO"));
+      app.contact().createPartial(new ContactData().withName("David").withLastName("John").withNickName("DJ").withTitle("CEO"));
     }
   }
 
