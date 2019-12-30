@@ -1,5 +1,6 @@
 package ru.stqa.pft.addressbook.appmanager;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,6 +11,8 @@ import ru.stqa.pft.addressbook.model.*;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import static org.openqa.selenium.support.ui.ExpectedConditions.alertIsPresent;
 
 public class ContactHelper extends HelperBase {
 
@@ -64,6 +67,7 @@ public class ContactHelper extends HelperBase {
 
   public void closeAttention() {
     closeAttentionDialog();
+    wd.findElement(By.cssSelector("div.msgbox"));
   }
 
   private void returnToHomePage() {
@@ -146,13 +150,14 @@ public class ContactHelper extends HelperBase {
     return wd.findElements(By.name("selected[]")).size();
   }
 
-  public Set<ContactData> all() {
-    Set<ContactData> contacts = new HashSet<ContactData>();
+  public Contacts all() {
+    Contacts contacts = new Contacts();
     List<WebElement> elements = wd.findElements(By.xpath("//tr[@name='entry']"));
     for (WebElement element:elements){
       String name = element.findElement(By.xpath("./td[3]")).getText();
+      String lastName = element.findElement(By.xpath("./td[2]")).getText();
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("id"));
-      contacts.add(new ContactData().withId(id).withName(name));
+      contacts.add(new ContactData().withId(id).withName(name).withLastName(lastName));
     }
     return contacts;
   }

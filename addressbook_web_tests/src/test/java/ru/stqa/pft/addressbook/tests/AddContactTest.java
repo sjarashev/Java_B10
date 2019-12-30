@@ -3,15 +3,15 @@ package ru.stqa.pft.addressbook.tests;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import ru.stqa.pft.addressbook.model.*;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class AddContactTest extends TestBase {
 
   @Test(enabled = true)
   public void testAddContact() {
-    Set<ContactData> before = app.contact().all();
+    Contacts before = app.contact().all();
     ContactData contactForm = new ContactData().withName("David").withLastName("John").withNickName("DJ").withTitle("CEO")
     .withCompanyName("ABC").
             withCompanyAddress("555 First Line").
@@ -29,12 +29,10 @@ public class AddContactTest extends TestBase {
             withGroup("group");
     app.contact().createNew(contactForm);
     app.goTo().homePage();
-    Set<ContactData> after = app.contact().all();
-    Assert.assertEquals(after.size(), before.size() + 1);
-
-    contactForm.withId(after.stream().mapToInt((g)->g.getId()).max().getAsInt());
-    before.add(contactForm);
-    Assert.assertEquals(after, before);
+    Contacts after = app.contact().all();
+    assertThat(after.size(), equalTo(before.size() + 1));
+    assertThat(after, equalTo(
+            before.withAdded(contactForm.withId(after.stream().mapToInt((g)->g.getId()).max().getAsInt()))));
   }
 
 

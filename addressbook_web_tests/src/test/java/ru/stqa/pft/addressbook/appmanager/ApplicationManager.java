@@ -3,6 +3,7 @@ package ru.stqa.pft.addressbook.appmanager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.BrowserType;
@@ -29,11 +30,11 @@ public class ApplicationManager {
       case BrowserType.CHROME:
         wd = new ChromeDriver();
         break;
-      case BrowserType.IE:
-        wd = new InternetExplorerDriver();
+      case BrowserType.EDGE:
+        wd = new EdgeDriver();
         break;
     }
-    //wd.manage().timeouts().implicitlyWait(300, TimeUnit.SECONDS);
+    wd.manage().timeouts().implicitlyWait(70, TimeUnit.MILLISECONDS);
     wd.manage().window().maximize();
     wd.get("http://localhost/addressbook/");
     groupHelper = new GroupHelper(wd);
