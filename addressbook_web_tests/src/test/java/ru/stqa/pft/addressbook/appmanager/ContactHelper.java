@@ -132,21 +132,22 @@ public class ContactHelper extends HelperBase {
     }
     type(By.name("firstname"), contactData.getName());
     type(By.name("lastname"), contactData.getLastName());
-    type(By.name("nickname"), contactData.getNickName());
+    type(By.name("address"), contactData.getCompanyAddress());
+    type(By.name("email"), contactData.getEmail());
+    type(By.name("home"), contactData.getHomePhone());
+    /*type(By.name("nickname"), contactData.getNickName());
+    attach(By.name("photo"), contactData.getPhoto());
     type(By.name("title"), contactData.getTitle());
     type(By.name("company"), contactData.getCompanyName());
-    type(By.name("address"), contactData.getCompanyAddress());
-    type(By.name("home"), contactData.getHomePhone());
     type(By.name("mobile"), contactData.getMobilePhone());
     type(By.name("work"), contactData.getWorkPhone());
-    type(By.name("email"), contactData.getEmail());
     type(By.name("homepage"), contactData.getCompanyURL());
     new Select(wd.findElement(By.name("bday"))).selectByVisibleText(contactData.getDay());
     new Select(wd.findElement(By.name("bmonth"))).selectByVisibleText(contactData.getMonth());
     type(By.name("byear"), contactData.getYear());
     type(By.name("notes"), contactData.getNote());
     type(By.name("phone2"), contactData.getSecondPhone());
-    type(By.name("address2"), contactData.getSecondAddress());
+    type(By.name("address2"), contactData.getSecondAddress());*/
   }
 
   private void createGroup(){
