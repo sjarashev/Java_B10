@@ -16,7 +16,8 @@ public class ContactInfoTests extends TestBase {
   public void ensurePreconditions(){
     app.goTo().homePage();
     if (app.contact().all().size()==0){
-      app.contact().createPartial(new ContactData().withName("David").withLastName("John").withNickName("DJ").withTitle("CEO"));
+      app.contact().createPartial(new ContactData().withName("David")
+              .withLastName("John").withNickName("DJ").withTitle("CEO"));
     }
   }
 
@@ -31,7 +32,8 @@ public class ContactInfoTests extends TestBase {
   }
 
   private String mergePhones(ContactData contact) {
-    return Arrays.asList(contact.getHomePhone(),contact.getMobilePhone(),contact.getWorkPhone(),contact.getSecondPhone())
+    return Arrays.asList(contact.getHomePhone(),contact.getMobilePhone(),contact.getWorkPhone()
+            ,contact.getSecondPhone())
             .stream().filter((s)->!s.equals(""))
             .map(ContactInfoTests::cleaned)
             .collect(Collectors.joining("\n"));

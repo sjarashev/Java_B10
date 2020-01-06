@@ -2,6 +2,8 @@
   {
     "name": "Name 1",
     "lastName": "LastName 1",
+    "title": "title 1",
+    "companyName": "companyName 1",
     "companyAddress": "Address 1",
     "email": "email 1",
     "homePhone": "phone 1",

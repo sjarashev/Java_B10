@@ -135,6 +135,8 @@ public class ContactHelper extends HelperBase {
     type(By.name("address"), contactData.getCompanyAddress());
     type(By.name("email"), contactData.getEmail());
     type(By.name("home"), contactData.getHomePhone());
+    type(By.name("title"), contactData.getTitle());
+    type(By.name("company"), contactData.getCompanyName());
     /*type(By.name("nickname"), contactData.getNickName());
     attach(By.name("photo"), contactData.getPhoto());
     type(By.name("title"), contactData.getTitle());

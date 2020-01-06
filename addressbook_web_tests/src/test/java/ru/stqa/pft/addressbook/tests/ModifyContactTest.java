@@ -10,15 +10,15 @@ public class ModifyContactTest extends TestBase {
 
   @BeforeMethod
   public void ensurePreconditions() {
-    app.goTo().homePage();
-    if (app.contact().all().size() == 0) {
+    if (app.db().contacts().size()==0){
+      app.goTo().homePage();
       app.contact().createPartial(new ContactData().withName("David").withLastName("John").withNickName("DJ").withTitle("CEO"));
     }
   }
 
   @Test(enabled = true)
   public void testModifyContact() throws InterruptedException {
-    Contacts before = app.contact().all();
+    Contacts before = app.db().contacts();
     ContactData modifiedContact = before.iterator().next();
     ContactData contactForm = new ContactData().withId(modifiedContact.getId())
             .withName("Mark").withLastName("Robinson").withNickName("MR").withTitle("COO")
@@ -36,9 +36,10 @@ public class ModifyContactTest extends TestBase {
                     withSecondPhone("858585").
                     withNote("blabla").
                     withGroup(null);
+    app.goTo().homePage();
     app.contact().modify(contactForm);
     assertThat(app.contact().count(), equalTo(before.size()));
-    Contacts after = app.contact().all();
+    Contacts after = app.db().contacts();
     assertThat(after, equalTo(before.without(modifiedContact).withAdded(contactForm)));
   }
 }
