@@ -11,6 +11,7 @@ import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
 
 import java.util.List;
+import java.util.Set;
 
 public class DbHelper {
 
@@ -41,4 +42,12 @@ public class DbHelper {
     session.close();
     return new Contacts(result);
   }
+
+  /*public void groupsForContacts(int id) {
+    Session session = sessionFactory.openSession();
+    session.beginTransaction();
+    session.createQuery("from ContactData where id = "+id+"").getG;
+    session.getTransaction().commit();
+    session.close();
+  }*/
 }

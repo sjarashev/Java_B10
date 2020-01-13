@@ -67,9 +67,9 @@ public class ContactHelper extends HelperBase {
     goToHomePage();
   }
 
-  public void createNew(ContactData conData) {
+  public void createNew(ContactData conData, boolean creation) {
     gotoAddContactPage();
-    fillContactForm(conData, true);
+    fillContactForm(conData, creation);
     submitForm();
     contactCache = null;
     goToHomePage();
@@ -99,6 +99,26 @@ public class ContactHelper extends HelperBase {
     wd.findElement(By.cssSelector("input[value='" + id + "']")).click();
   }
 
+  public void add(){
+    click(By.name("add"));
+  }
+
+  public void remove(){
+    click(By.name("remove"));
+  }
+
+  public void selectAndAdd(ContactData contact, String name) {
+    selectContactById(contact.getId());
+    new Select(wd.findElement(By.name("to_group"))).selectByVisibleText(name);
+    add();
+  }
+
+  public void selectAndRemove(ContactData contact, GroupData group) {
+    new Select(wd.findElement(By.name("group"))).selectByVisibleText(group.getName());
+    selectContactById(contact.getId());
+    remove();
+  }
+
   public void deleteContact() {
     click(By.xpath("//input[@value='Delete']"));
   }
@@ -122,10 +142,12 @@ public class ContactHelper extends HelperBase {
   public void fillContactForm(ContactData contactData, boolean creation) {
     if (creation) {
       try {
-        new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+        new Select(wd.findElement(By.name("new_group")))
+                .selectByVisibleText(contactData.getGroup());
       } catch (Exception e) {
         createGroup();
-        new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+        new Select(wd.findElement(By.name("new_group")))
+                .selectByVisibleText(contactData.getGroup());
       }
     } else {
       Assert.assertFalse(isElementPresent(By.name("new_group")));
@@ -152,7 +174,7 @@ public class ContactHelper extends HelperBase {
     type(By.name("address2"), contactData.getSecondAddress());*/
   }
 
-  private void createGroup(){
+  public void createGroup(){
     NavigationHelper n = new NavigationHelper(wd);
     GroupHelper g = new GroupHelper(wd);
     n.groupPage();
@@ -166,8 +188,9 @@ public class ContactHelper extends HelperBase {
   private void fillPartialContactForm(ContactData contactData) {
     type(By.name("firstname"), contactData.getName());
     type(By.name("lastname"), contactData.getLastName());
-    type(By.name("nickname"), contactData.getNickName());
     type(By.name("title"), contactData.getTitle());
+    type(By.name("company"), contactData.getNickName());
+    type(By.name("address"), contactData.getCompanyAddress());
   }
 
   public boolean thereIsNoContact() {

@@ -56,24 +56,25 @@ public class AddContactTest extends TestBase {
   public void testAddContact(ContactData contactForm) {
     app.goTo().homePage();
     Contacts before = app.db().contacts();
-//    File photo = new File("src/test/resources/image.jpg");
-//    ContactData contactForm = new ContactData().withName("David").withLastName("John").withNickName("DJ").withPhoto(photo)
-//            .withTitle("CEO")
-//            .withCompanyName("ABC")
-//            .withCompanyAddress("555 First Line")
-//            .withHomePhone("55555555")
-//            .withMobilePhone("777777777")
-//            .withWorkPhone("999999999")
-//            .withEmail("dj@gmail.com")
-//            .withCompanyURL("www.abc.com")
-//            .withYear("1979")
-//            .withMonth("December")
-//            .withDay("10")
-//            .withSecondAddress("202020")
-//            .withSecondPhone("101010")
-//            .withNote("bla")
-//            .withGroup("group");
-    app.contact().createNew(contactForm);
+/*
+    File photo = new File("src/test/resources/image.jpg");
+    ContactData contactForm = new ContactData().withName("David").withLastName("John").withNickName("DJ").withPhoto(photo)
+            .withTitle("CEO")
+            .withCompanyName("ABC")
+            .withCompanyAddress("555 First Line")
+            .withHomePhone("55555555")
+            .withMobilePhone("777777777")
+            .withWorkPhone("999999999")
+            .withEmail("dj@gmail.com")
+            .withCompanyURL("www.abc.com")
+            .withYear("1979")
+            .withMonth("December")
+            .withDay("10")
+            .withSecondAddress("202020")
+            .withSecondPhone("101010")
+            .withNote("bla")
+            .withGroup("group");*/
+    app.contact().createNew(contactForm, true);
     assertThat(app.contact().count(), equalTo(before.size() + 1));
     Contacts after = app.db().contacts();
     assertThat(after, equalTo(
@@ -100,7 +101,7 @@ public class AddContactTest extends TestBase {
                     withSecondPhone("101010").
                     withNote("bla").
                     withGroup("group");
-    app.contact().createNew(contactForm);
+    app.contact().createNew(contactForm, true);
     assertThat(app.contact().count(), equalTo(before.size()));
     Contacts after = app.db().contacts();
     assertThat(after, equalTo(before));

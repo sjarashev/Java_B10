@@ -34,8 +34,8 @@ public class ModifyContactTest extends TestBase {
                     withDay("11").
                     withSecondAddress("45245245").
                     withSecondPhone("858585").
-                    withNote("blabla").
-                    withGroup(null);
+                    withNote("blabla")/*.
+                    withGroup(null)*/;
     app.goTo().homePage();
     app.contact().modify(contactForm);
     assertThat(app.contact().count(), equalTo(before.size()));
