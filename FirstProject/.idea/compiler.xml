@@ -6,6 +6,8 @@
       <module name="addressbook_web_tests.test" target="1.8" />
       <module name="FirstProject.main" target="1.8" />
       <module name="FirstProject.test" target="1.8" />
+      <module name="mantis-tests.main" target="1.8" />
+      <module name="mantis-tests.test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
