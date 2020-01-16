@@ -107,14 +107,30 @@ public class ContactHelper extends HelperBase {
     click(By.name("remove"));
   }
 
-  public void selectAndAdd(ContactData contact, String name) {
+  public List<WebElement> allContacts() {
+    List<WebElement> j = wd.findElements(By.name("selected[]"));
+    return j;
+  }
+
+  public void selectAndAdd3(ContactData contact, int id) {
     selectContactById(contact.getId());
-    new Select(wd.findElement(By.name("to_group"))).selectByVisibleText(name);
+    String s = String.valueOf(id);
+    new Select(wd.findElement(By.name("to_group"))).selectByValue(s);
     add();
+    goToHomePage();
+  }
+
+  public void selectAndAdd(ContactData contact, GroupData group) {
+    String id = String.valueOf(group.getId());
+    selectContactById(contact.getId());
+    new Select(wd.findElement(By.name("to_group"))).selectByValue(id);
+    add();
+    goToHomePage();
   }
 
   public void selectAndRemove(ContactData contact, GroupData group) {
-    new Select(wd.findElement(By.name("group"))).selectByVisibleText(group.getName());
+    String s = String.valueOf(group.getId());
+    new Select(wd.findElement(By.name("group"))).selectByValue(s);
     selectContactById(contact.getId());
     remove();
   }

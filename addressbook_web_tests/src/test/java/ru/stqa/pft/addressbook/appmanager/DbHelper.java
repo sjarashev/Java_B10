@@ -5,6 +5,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
@@ -43,11 +44,21 @@ public class DbHelper {
     return new Contacts(result);
   }
 
-  /*public void groupsForContacts(int id) {
+  public ContactData contact(int id) {
     Session session = sessionFactory.openSession();
     session.beginTransaction();
-    session.createQuery("from ContactData where id = "+id+"").getG;
+    List<ContactData> result = session.createQuery("from ContactData where id = '"+id+"'").list();
     session.getTransaction().commit();
     session.close();
-  }*/
+    ContactData contact = null;
+    for (ContactData oneContact:result) {
+      try {
+        Assert.assertNotEquals(oneContact.getId(),id);
+      } catch (AssertionError e) {
+        contact = oneContact;
+        break;
+      }
+    }
+    return contact;
+  }
 }

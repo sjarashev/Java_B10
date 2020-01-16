@@ -80,6 +80,11 @@ public class GroupHelper extends HelperBase {
     return wd.findElements(By.name("selected[]")).size();
   }
 
+  public List<WebElement> allGroups() {
+    List<WebElement> j = wd.findElements(By.name("selected[]"));
+    return j;
+  }
+
   private Groups groupCache = null;
 
   public Groups all() {
